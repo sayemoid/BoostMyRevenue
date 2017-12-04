@@ -39,15 +39,16 @@ public class SMR {
         Ael.logEvent(context, event);
     }
 
-    public static void logOnline(final Activity context, Event event){
+    public static void logOnline(final Activity context, Event event) {
         StorageUtil.writeObject(context, StorageUtil.FILE_NAME, event);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                List<Event> eventList = StorageUtil.readObjects(context,StorageUtil.FILE_NAME);
-                Log.d("EVENTS", Parser.getGson().toJson(eventList));
+                List<Event> eventList = StorageUtil.readObjects(context, StorageUtil.FILE_NAME);
+                ApiClient.postEvent(context, eventList);
+                Log.d("LOG_ONLINE", Parser.getGson().toJson(eventList));
             }
-        },5000);
+        }, 5000);
     }
 
 }

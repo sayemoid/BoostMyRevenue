@@ -8,7 +8,15 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.OkHttpResponseListener;
 import com.androidnetworking.interfaces.StringRequestListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import okhttp3.Response;
+import xyz.rimon.ael.domains.Event;
+import xyz.rimon.smr.commons.Parser;
 import xyz.rimon.smr.commons.Pref;
 import xyz.rimon.smr.exceptions.InvalidException;
 import xyz.rimon.smr.model.User;
@@ -63,6 +71,35 @@ public class ApiClient {
                     @Override
                     public void onResponse(String response) {
                         ResponseHandler.onUserLogin(context, response);
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        ResponseHandler.onError(anError);
+                    }
+                });
+    }
+
+    public static void postEvent(final Context context, List<Event> eventList) {
+        if (eventList == null) eventList = new ArrayList<>();
+        JSONArray jsonArray;
+        try {
+            jsonArray = new JSONArray(Parser.getGson().toJson(eventList));
+        } catch (JSONException e) {
+            jsonArray = new JSONArray();
+        }
+
+        AndroidNetworking.post(ApiEndpoints.POST_EVENT_URL)
+                .addHeaders("Content-Type", "application/json")
+                .addQueryParameter(ApiEndpoints.KEY_ACCESS_TOKEN, Pref.getPreferenceString(context, Pref.KEY_ACCESS_TOKEN))
+                .addJSONArrayBody(jsonArray)
+                .setTag("test")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsOkHttpResponse(new OkHttpResponseListener() {
+                    @Override
+                    public void onResponse(Response response) {
+                        ResponseHandler.onPostEvent(context, response);
                     }
 
                     @Override

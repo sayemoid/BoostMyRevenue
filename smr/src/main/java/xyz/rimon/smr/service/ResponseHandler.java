@@ -10,6 +10,7 @@ import xyz.rimon.smr.commons.Parser;
 import xyz.rimon.smr.commons.Pref;
 import xyz.rimon.smr.model.User;
 import xyz.rimon.smr.model.UserAuth;
+import xyz.rimon.smr.utils.StorageUtil;
 
 /**
  * Created by SAyEM on 4/12/17.
@@ -44,4 +45,12 @@ public class ResponseHandler {
         Log.e("LOGIN_ERROR", anError.getErrorCode() + ":" + anError.getMessage());
     }
 
+    public static void onPostEvent(Context context, Response response) {
+        if (response.code() == 200) {
+            Log.i("POST_EVENT_CODE", String.valueOf(response.code()));
+            StorageUtil.clearObjects(context, StorageUtil.FILE_NAME);
+        } else {
+            Log.e("POST_EVENT_ERROR", response.code() + ": Access_token:" + Pref.getPreferenceString(context, Pref.KEY_ACCESS_TOKEN));
+        }
+    }
 }

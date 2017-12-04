@@ -30,14 +30,14 @@ public class StorageUtil {
     }
 
     public static void writeObjects(Context context, String fileName, List<Event> objectList) {
-        if(!PermissionUtil.hasPermission(context, "android.permission.WRITE_EXTERNAL_STORAGE")) {
-            PermissionUtil.askForPermission((Activity)context, "android.permission.WRITE_EXTERNAL_STORAGE");
+        if (!PermissionUtil.hasPermission(context, "android.permission.WRITE_EXTERNAL_STORAGE")) {
+            PermissionUtil.askForPermission((Activity) context, "android.permission.WRITE_EXTERNAL_STORAGE");
         }
 
         Log.i("EVENT_LIST_WRITE", objectList.size() + "");
         File rootPath = Environment.getExternalStorageDirectory();
         File objectDir = new File(rootPath.getAbsolutePath() + "/" + context.getPackageName() + "/ael");
-        if(!objectDir.exists()) {
+        if (!objectDir.exists()) {
             objectDir.mkdirs();
         }
 
@@ -53,11 +53,11 @@ public class StorageUtil {
             var17.printStackTrace();
         } finally {
             try {
-                if(oos != null) {
+                if (oos != null) {
                     oos.close();
                 }
 
-                if(fos != null) {
+                if (fos != null) {
                     fos.close();
                 }
             } catch (IOException var16) {
@@ -69,14 +69,14 @@ public class StorageUtil {
     }
 
     public static List<Event> readObjects(Context context, String fileName) {
-        if(!PermissionUtil.hasPermission(context, "android.permission.READ_EXTERNAL_STORAGE")) {
-            PermissionUtil.askForPermission((Activity)context, "android.permission.READ_EXTERNAL_STORAGE");
+        if (!PermissionUtil.hasPermission(context, "android.permission.READ_EXTERNAL_STORAGE")) {
+            PermissionUtil.askForPermission((Activity) context, "android.permission.READ_EXTERNAL_STORAGE");
         }
 
         List<Event> objectList = new ArrayList();
         File rootPath = Environment.getExternalStorageDirectory();
         File cmedDir = new File(rootPath.getAbsolutePath() + "/" + context.getPackageName() + "/ael");
-        if(!cmedDir.exists()) {
+        if (!cmedDir.exists()) {
             cmedDir.mkdirs();
         }
 
@@ -87,16 +87,16 @@ public class StorageUtil {
         try {
             fis = new FileInputStream(objectsFile);
             ois = new ObjectInputStream(fis);
-            objectList = (List)ois.readObject();
+            objectList = (List) ois.readObject();
         } catch (ClassNotFoundException | IOException var17) {
             Log.e("CAN'T READ OBJECTS ", var17.toString());
         } finally {
             try {
-                if(ois != null) {
+                if (ois != null) {
                     ois.close();
                 }
 
-                if(fis != null) {
+                if (fis != null) {
                     fis.close();
                 }
             } catch (IOException var16) {
@@ -105,18 +105,22 @@ public class StorageUtil {
 
         }
 
-        Log.i("EVENT_LIST_READ", ((List)objectList).size() + "");
-        return (List)objectList;
+        Log.i("EVENT_LIST_READ", ((List) objectList).size() + "");
+        return (List) objectList;
     }
 
     public static void writeObject(Context context, String fileName, Event event) {
         List<Event> objectList = readObjects(context, fileName);
-        if(objectList == null) {
+        if (objectList == null) {
             objectList = new ArrayList();
         }
 
-        ((List)objectList).add(event);
-        writeObjects(context, fileName, (List)objectList);
-        Log.i("OFFLINE_EVENTS", String.valueOf(((List)objectList).size()));
+        ((List) objectList).add(event);
+        writeObjects(context, fileName, (List) objectList);
+        Log.i("OFFLINE_EVENTS", String.valueOf(((List) objectList).size()));
+    }
+
+    public static void clearObjects(Context context, String fileName) {
+        writeObjects(context, fileName, new ArrayList<Event>());
     }
 }

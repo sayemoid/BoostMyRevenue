@@ -13,6 +13,7 @@ public class ApiEndpoints {
 
     public static String REGISTER_URL = BASE_URL + API_VERSION + "/users/create";
     public static String OAUTH_TOKEN_URL = BASE_URL + "/oauth/token";
+    public static String POST_EVENT_URL = BASE_URL + API_VERSION + "/events";
 
 
     public static String KEY_ACCESS_TOKEN = "access_token";
