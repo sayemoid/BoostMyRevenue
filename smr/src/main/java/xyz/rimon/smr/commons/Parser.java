@@ -1,14 +1,13 @@
 package xyz.rimon.smr.commons;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
 import java.io.StringReader;
 
+import xyz.rimon.ael.commons.Commons;
 import xyz.rimon.smr.model.User;
 import xyz.rimon.smr.model.UserAuth;
-import xyz.rimon.smr.utils.DateUtil;
 
 /**
  * Created by SAyEM on 4/12/17.
@@ -16,7 +15,7 @@ import xyz.rimon.smr.utils.DateUtil;
 
 public class Parser {
     public static Gson getGson() {
-        return new GsonBuilder().setDateFormat(DateUtil.SERVER_DATE_TIME_PATTERN).create();
+        return Commons.buildGson();
     }
 
     public static User parseUser(String response) {

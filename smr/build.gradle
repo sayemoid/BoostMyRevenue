@@ -33,9 +33,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    compile 'com.github.sayemkcn:ael:rc~1.1-SNAPSHOT'
-    compile 'com.google.code.gson:gson:2.8.2'
-    compile 'com.squareup.okhttp3:okhttp:3.9.1'
-    compile 'com.amitshekhar.android:jackson-android-networking:1.0.0'
-
+    compile 'com.github.sayemkcn:ael:v1.5'
+    compile 'com.amitshekhar.android:android-networking:1.0.0'
 }
