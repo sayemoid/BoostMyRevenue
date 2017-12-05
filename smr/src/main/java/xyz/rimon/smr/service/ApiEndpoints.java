@@ -30,5 +30,6 @@ public class ApiEndpoints {
     public static String KEY_PASSOWRD = "password";
 
     public static String VAL_PASSWORD = "password";
+    public static String VAL_REFRESH_TOKEN = "refresh_token";
 
 }
