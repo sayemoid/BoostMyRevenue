@@ -5,12 +5,18 @@ import android.util.Log;
 
 import com.androidnetworking.error.ANError;
 
+import org.greenrobot.eventbus.EventBus;
+
 import okhttp3.Response;
 import xyz.rimon.ael.commons.utils.StorageUtil;
 import xyz.rimon.smr.commons.Auth;
 import xyz.rimon.smr.commons.Pref;
+import xyz.rimon.smr.events.LoginEvent;
+import xyz.rimon.smr.events.PostEventsEvent;
+import xyz.rimon.smr.events.RevenueLoadEvent;
 import xyz.rimon.smr.model.User;
 import xyz.rimon.smr.model.UserAuth;
+import xyz.rimon.smr.model.UserRev;
 
 /**
  * Created by SAyEM on 4/12/17.
@@ -30,9 +36,10 @@ public class ResponseHandler {
 
     public static void onUserLogin(Context context, Response response, UserAuth auth) {
 //        UserAuth auth = Parser.parseUserAuth(response);
-        if (auth != null)
+        if (auth != null) {
             Auth.setLoggedIn(context, auth);
-        else {
+            EventBus.getDefault().post(new LoginEvent(auth));
+        } else {
             // check if initialised, if not then initialized
 //            if (!Pref.getPreference(context,Pref.KEY_INITIALIZED))
 //                Auth.sse
@@ -54,6 +61,7 @@ public class ResponseHandler {
         if (response.code() == 200) {
             Log.i("POST_EVENT_CODE", String.valueOf(response.code()));
             StorageUtil.clearObjects(context, StorageUtil.TEMP_FILE_NAME);
+            EventBus.getDefault().post(new PostEventsEvent(true));
         } else if (response.code() == 401) {
             ApiClient.refreshToken(context);
             Log.e("POST_EVENT_ERROR", response.code() + ": Access_token:" + Pref.getPreferenceString(context, Pref.KEY_ACCESS_TOKEN));
@@ -61,4 +69,11 @@ public class ResponseHandler {
     }
 
 
+    public static void onUserRevenueLoaded(Context context, Response response, UserRev userRev) {
+        if (response.code() == 200) {
+            EventBus.getDefault().post(new RevenueLoadEvent(userRev));
+            return;
+        }
+        Log.e("LOAD_REVENUE_CODE", String.valueOf(response.code()));
+    }
 }

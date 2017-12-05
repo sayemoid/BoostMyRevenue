@@ -16,9 +16,9 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        User user = new User("Rimon Ryan", "rimonryan10", "email10@rimon.xyz", "qwerty");
+        User user = new User("Rimon Ryan", "rimonryan", "email@rimon.xyz", "qwerty");
         try {
-            SMR.initialize(getApplicationContext(), "ir8tm91qmvd9pbg7dat7e32p22", "48fn7kn3irmndhus48q7l6agto", user);
+            SMR.initialize(getApplicationContext(), "giqpjglhuk77j6j4q7rkeplces", "3fl6cf4e7d1hug06856ei6v1o6", user);
         } catch (InvalidException e) {
             Log.e("Error", e.toString());
         }

@@ -25,6 +25,7 @@ import xyz.rimon.smr.commons.Pref;
 import xyz.rimon.smr.exceptions.InvalidException;
 import xyz.rimon.smr.model.User;
 import xyz.rimon.smr.model.UserAuth;
+import xyz.rimon.smr.model.UserRev;
 import xyz.rimon.smr.utils.Validator;
 
 /**
@@ -142,6 +143,28 @@ public class ApiClient {
                     @Override
                     public void onError(ANError anError) {
                         ResponseHandler.onError(anError);
+                    }
+                });
+    }
+
+    public static void loadUserRevenue(final Context context, String month, String year) {
+        AndroidNetworking.get(ApiEndpoints.GET_USER_REVENUE_URL)
+                .addQueryParameter(ApiEndpoints.KEY_ACCESS_TOKEN, Pref.getPreferenceString(context, Pref.KEY_ACCESS_TOKEN))
+                .addQueryParameter(ApiEndpoints.KEY_MONTH, month)
+                .addQueryParameter(ApiEndpoints.KEY_YEAR, year)
+                .setTag("test")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsOkHttpResponseAndParsed(new TypeToken<UserRev>() {
+                }, new OkHttpResponseAndParsedRequestListener<UserRev>() {
+                    @Override
+                    public void onResponse(Response okHttpResponse, UserRev userRev) {
+                        ResponseHandler.onUserRevenueLoaded(context, okHttpResponse, userRev);
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        login(context);
                     }
                 });
     }
