@@ -15,6 +15,7 @@ public class UserRev {
     private Long to;
 
     public Long getCurrentMonthInteractionPoints() {
+        if (currentMonthInteractionPoints == null) return 0L;
         return currentMonthInteractionPoints;
     }
 
@@ -23,6 +24,7 @@ public class UserRev {
     }
 
     public Long getPreviousMonthInteractionPoints() {
+        if (previousMonthInteractionPoints == null) return 0L;
         return previousMonthInteractionPoints;
     }
 
@@ -31,6 +33,7 @@ public class UserRev {
     }
 
     public Long getPreviousMonthIncome() {
+        if (previousMonthIncome == null) return 0L;
         return previousMonthIncome;
     }
 

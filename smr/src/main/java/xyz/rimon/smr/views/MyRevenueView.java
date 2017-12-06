@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -60,10 +59,9 @@ public class MyRevenueView extends LinearLayout {
         if (!event.isSuccess()) return;
         UserRev userRev = event.getUserRev();
         this.pmInteractionPoints.setText(String.valueOf(userRev.getPreviousMonthInteractionPoints()));
-        this.pmIncome.setText(String.valueOf(userRev.getPreviousMonthIncome()));
-        this.cmIncome.setText(String.valueOf(userRev.getCurrentBalance()));
+        this.pmIncome.setText("৳" + String.valueOf(userRev.getPreviousMonthIncome()));
+        this.cmIncome.setText("৳" + String.valueOf(userRev.getCurrentBalance()));
         this.cmInterationPoints.setText(String.valueOf(userRev.getCurrentMonthInteractionPoints()));
-        Toast.makeText(getContext(), "Earnings updated!", Toast.LENGTH_SHORT);
     }
 
     @Subscribe
