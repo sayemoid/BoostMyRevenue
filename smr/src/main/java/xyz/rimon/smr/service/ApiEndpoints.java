@@ -13,6 +13,8 @@ public class ApiEndpoints {
 
     public static String REGISTER_URL = BASE_URL + API_VERSION + "/users/create";
     public static String OAUTH_TOKEN_URL = BASE_URL + "/oauth/token";
+    public static String POST_EVENT_URL = BASE_URL + API_VERSION + "/events";
+    public static String GET_USER_REVENUE_URL = BASE_URL + API_VERSION + "/rev/self";
 
 
     public static String KEY_ACCESS_TOKEN = "access_token";
@@ -27,7 +29,10 @@ public class ApiEndpoints {
     public static String KEY_USERNAME = "username";
     public static String KEY_EMAIL = "email";
     public static String KEY_PASSOWRD = "password";
+    public static String KEY_MONTH = "month";
+    public static String KEY_YEAR = "year";
 
     public static String VAL_PASSWORD = "password";
+    public static String VAL_REFRESH_TOKEN = "refresh_token";
 
 }
