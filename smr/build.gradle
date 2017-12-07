@@ -31,7 +31,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    compile 'com.github.sayemkcn:ael:v1.5'
+    compile 'com.github.sayemkcn:ael:v1.6'
     compile 'com.amitshekhar.android:android-networking:1.0.0'
     compile 'com.android.support:cardview-v7:26.1.0'
 }

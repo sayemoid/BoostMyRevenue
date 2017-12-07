@@ -15,7 +15,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import xyz.rimon.ael.commons.Commons;
 import xyz.rimon.smr.R;
+import xyz.rimon.smr.commons.Pref;
 import xyz.rimon.smr.events.LoginEvent;
 import xyz.rimon.smr.events.PostEventsEvent;
 import xyz.rimon.smr.events.RevenueLoadEvent;
@@ -58,6 +60,11 @@ public class MyRevenueView extends LinearLayout {
     public void onUserRevLoaded(RevenueLoadEvent event) {
         if (!event.isSuccess()) return;
         UserRev userRev = event.getUserRev();
+        Pref.savePreference(getContext(), Pref.KEY_USER_REV_JSON, Commons.buildGson().toJson(userRev));
+        this.updateViews(userRev);
+    }
+
+    private void updateViews(UserRev userRev) {
         this.pmInteractionPoints.setText(String.valueOf(userRev.getPreviousMonthInteractionPoints()));
         this.pmIncome.setText("৳" + String.valueOf(userRev.getPreviousMonthIncome()));
         this.cmIncome.setText("৳" + String.valueOf(userRev.getCurrentBalance()));
@@ -77,6 +84,13 @@ public class MyRevenueView extends LinearLayout {
     }
 
     private void loadUserRevenue() {
+        // update userrev by default
+        if (!Pref.isNull(getContext(), Pref.KEY_USER_REV_JSON)) {
+            UserRev userRev = Commons.buildGson().fromJson(Pref.getPreferenceString(getContext(), Pref.KEY_USER_REV_JSON), UserRev.class);
+            this.updateViews(userRev);
+        }
+
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         String month = new SimpleDateFormat("MMMM", Locale.US).format(calendar.getTime());

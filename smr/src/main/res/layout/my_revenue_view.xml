@@ -47,7 +47,7 @@
                         android:layout_marginStart="1dp"
                         android:background="@drawable/boder"
                         android:gravity="center"
-                        android:text="497"
+                        android:text="0"
                         android:textColor="@android:color/white"
                         android:textSize="30dp" />
                 </LinearLayout>
@@ -70,7 +70,7 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/boder"
                         android:gravity="center"
-                        android:text="666"
+                        android:text="0"
                         android:textColor="@android:color/white"
                         android:textSize="30dp" />
                 </LinearLayout>
@@ -102,7 +102,7 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/boder"
                         android:gravity="center"
-                        android:text="400"
+                        android:text="0"
                         android:textColor="@android:color/white"
                         android:textSize="30dp" />
                 </LinearLayout>
@@ -127,7 +127,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/boder"
                         android:gravity="center"
-                        android:text="200"
+                        android:text="0"
                         android:textColor="@android:color/white"
                         android:textSize="30dp" />
                 </LinearLayout>
