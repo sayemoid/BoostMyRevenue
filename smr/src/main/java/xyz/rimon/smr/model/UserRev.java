@@ -9,7 +9,7 @@ import java.util.Date;
 public class UserRev {
     private Long currentMonthInteractionPoints;
     private Long currentBalance;
-    private Long previousMonthInteractionPoints;
+    private Long lastPaymentAmount;
     private Long previousMonthIncome;
     private Long from;
     private Long to;
@@ -23,13 +23,13 @@ public class UserRev {
         this.currentMonthInteractionPoints = currentMonthInteractionPoints;
     }
 
-    public Long getPreviousMonthInteractionPoints() {
-        if (previousMonthInteractionPoints == null) return 0L;
-        return previousMonthInteractionPoints;
+    public Long getLastPaymentAmount() {
+        if (lastPaymentAmount == null) return 0L;
+        return lastPaymentAmount;
     }
 
-    public void setPreviousMonthInteractionPoints(Long previousMonthInteractionPoints) {
-        this.previousMonthInteractionPoints = previousMonthInteractionPoints;
+    public void setLastPaymentAmount(Long lastPaymentAmount) {
+        this.lastPaymentAmount = lastPaymentAmount;
     }
 
     public Long getPreviousMonthIncome() {

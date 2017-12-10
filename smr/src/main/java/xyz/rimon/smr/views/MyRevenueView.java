@@ -31,7 +31,7 @@ public class MyRevenueView extends LinearLayout {
 
     private TextView cmInterationPoints;
     private TextView cmIncome;
-    private TextView pmInteractionPoints;
+    private TextView lastPaymentAmount;
     private TextView pmIncome;
 
     public MyRevenueView(Context context) {
@@ -50,7 +50,7 @@ public class MyRevenueView extends LinearLayout {
 
         this.cmInterationPoints = this.findViewById(R.id.cmInteractionPoints);
         this.cmIncome = this.findViewById(R.id.cmIncome);
-        this.pmInteractionPoints = this.findViewById(R.id.pmInteractionPoints);
+        this.lastPaymentAmount = this.findViewById(R.id.lastPaymentAmount);
         this.pmIncome = this.findViewById(R.id.pmIncome);
 
         this.loadUserRevenue();
@@ -65,7 +65,7 @@ public class MyRevenueView extends LinearLayout {
     }
 
     private void updateViews(UserRev userRev) {
-        this.pmInteractionPoints.setText(String.valueOf(userRev.getPreviousMonthInteractionPoints()));
+        this.lastPaymentAmount.setText(String.valueOf("৳" + userRev.getLastPaymentAmount()));
         this.pmIncome.setText("৳" + String.valueOf(userRev.getPreviousMonthIncome()));
         this.cmIncome.setText("৳" + String.valueOf(userRev.getCurrentBalance()));
         this.cmInterationPoints.setText(String.valueOf(userRev.getCurrentMonthInteractionPoints()));

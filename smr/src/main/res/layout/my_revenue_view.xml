@@ -61,11 +61,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Last Month Paints"
+                        android:text="Last Payment"
                         android:textColor="@android:color/white" />
 
                     <TextView
-                        android:id="@+id/pmInteractionPoints"
+                        android:id="@+id/lastPaymentAmount"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/boder"
