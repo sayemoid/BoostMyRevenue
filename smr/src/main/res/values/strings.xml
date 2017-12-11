@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">smr</string>
+
+    <string-array name="paymentMethods">
+        <item>BKash</item>
+        <item>Rocket</item>
+        <item>QCash</item>
+    </string-array>
 </resources>

@@ -169,6 +169,28 @@ public class ApiClient {
                 });
     }
 
+    public static void sendPaymentRequest(final Context context, String paymentMethod, String accountNumber, String amount){
+        AndroidNetworking.post(ApiEndpoints.POST_PAYMENT_REQUEST_URL)
+                .addQueryParameter(ApiEndpoints.KEY_ACCESS_TOKEN, Pref.getPreferenceString(context, Pref.KEY_ACCESS_TOKEN))
+                .addQueryParameter(ApiEndpoints.KEY_PAYMENT_METHOD,paymentMethod)
+                .addQueryParameter(ApiEndpoints.KEY_ACCOUNT_NUMBER,accountNumber)
+                .addQueryParameter(ApiEndpoints.KEY_REQUEST_AMOUNT, amount)
+                .setTag("test")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsOkHttpResponse(new OkHttpResponseListener() {
+                    @Override
+                    public void onResponse(Response response) {
+                        ResponseHandler.onPostPaymentRequest(context, response);
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        ResponseHandler.onError(anError);
+                    }
+                });
+    }
+
 
     private static void reInitialize(Context context) {
         User user = new User(

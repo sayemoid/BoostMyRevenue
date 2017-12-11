@@ -11,6 +11,8 @@ public class UserRev {
     private Long currentBalance;
     private Long lastPaymentAmount;
     private Long previousMonthIncome;
+    private int thresholdLimit;
+    private boolean canRequestForPayment;
     private Long from;
     private Long to;
 
@@ -67,5 +69,21 @@ public class UserRev {
 
     public void setCurrentBalance(Long currentBalance) {
         this.currentBalance = currentBalance;
+    }
+
+    public int getThresholdLimit() {
+        return thresholdLimit;
+    }
+
+    public void setThresholdLimit(int thresholdLimit) {
+        this.thresholdLimit = thresholdLimit;
+    }
+
+    public boolean isCanRequestForPayment() {
+        return canRequestForPayment;
+    }
+
+    public void setCanRequestForPayment(boolean canRequestForPayment) {
+        this.canRequestForPayment = canRequestForPayment;
     }
 }

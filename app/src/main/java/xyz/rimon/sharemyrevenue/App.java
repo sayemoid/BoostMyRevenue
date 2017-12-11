@@ -18,7 +18,7 @@ public class App extends Application {
 
         User user = new User("Rimon Ryan", "rimonranbir", "rimonranbir@gmail.com", "qwerty");
         try {
-            SMR.initialize(getApplicationContext(), "8bheq0so8mo3rdced0tmh15to1", "bl482aps529a8o817vs4uppepa", user);
+            SMR.initialize(getApplicationContext(), "op11ved6k5h3j4rof6qh04pnfg", "6og8ct2r7okfl0ocgs9sui5jgv", user);
         } catch (InvalidException e) {
             Log.e("Error", e.toString());
         }
