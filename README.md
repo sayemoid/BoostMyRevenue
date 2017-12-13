@@ -62,6 +62,18 @@ You can find any specific event by tag or event code. (You should always get eve
 ```
 
 
+##<b>View for users to see earnings, send payment requests</b>
+
+Just add this view anywhere you want. That's it.
+
+```
+     <xyz.rimon.smr.views.MyRevenueView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+```
+
+
+
 Whoolala you're a sperstar now!!!
 But it's not all over yet, We've a dashboard for you on our [Website](http://www.sharemyrevenue.net) to manage your users, Share your revenues, resolving payment requests and so on!
 If you find any trouble integrating our api, Please contact me by [email](email@rimon.xyz) at any time. I'm looking forward to help you with my best efforts.
