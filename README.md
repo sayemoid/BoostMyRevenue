@@ -1,7 +1,8 @@
 # ShareMyRevenue
 *Share a percentage of your revenue among your users, grow your company!* 
-
 *By simply logging their interactions.*
+
+*If you want to distribute your revenues/earnings among your users according to their interactions and usage of your app, then this api does just that for you.*
 
 <b> Add ShareMyRevenue to your project</b>
 
@@ -24,7 +25,7 @@ dependencies {
 
 *You have to register our website to get client_id and client_secret for your app*
 
-[Register Here](https://smr.toracode.net)
+[Register Here](http://www.sharemyrevenue.net)
 
 Click 'Show' button to copy your client id and secret.
 
@@ -62,7 +63,7 @@ You can find any specific event by tag or event code. (You should always get eve
 
 
 Whoolala you're a sperstar now!!!
-But it's not all over yet, We've a dashboard for you on our [Website](https://smr.toracode.net) to manage your users, Share your revenues, resolving payment requests and so on!
+But it's not all over yet, We've a dashboard for you on our [Website](http://www.sharemyrevenue.net) to manage your users, Share your revenues, resolving payment requests and so on!
 If you find any trouble integrating our api, Please contact me by [email](email@rimon.xyz) at any time. I'm looking forward to help you with my best efforts.
 
 God Bless you.
