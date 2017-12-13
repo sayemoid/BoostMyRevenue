@@ -153,6 +153,15 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+        if (position == 0) {
+            this.btnSendRequest.setEnabled(false);
+            this.btnSendRequest.setText("Please select a payment method");
+            this.btnSendRequest.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+        }else {
+            this.btnSendRequest.setEnabled(true);
+            this.btnSendRequest.setText("Send Request");
+            this.btnSendRequest.setTextColor(getResources().getColor(android.R.color.holo_green_light));
+        }
         this.paymentMethod = getResources().getStringArray(R.array.paymentMethods)[position];
     }
 

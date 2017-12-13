@@ -7,6 +7,8 @@ import com.androidnetworking.error.ANError;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.IOException;
+
 import okhttp3.Response;
 import xyz.rimon.ael.commons.utils.StorageUtil;
 import xyz.rimon.smr.commons.Auth;
@@ -72,9 +74,15 @@ public class ResponseHandler {
     public static void onPostPaymentRequest(Context context, Response response) {
         if (response.code() == 200)
             EventBus.getDefault().post(new PaymentRequestEvent(true));
-        else if (response.code() == 406)
-            EventBus.getDefault().post(new PaymentRequestEvent(true, "Insufficient balance!"));
-        else
+        else if (response.code() == 406) {
+            String message = "";
+            try {
+                message = response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            EventBus.getDefault().post(new PaymentRequestEvent(true, message));
+        } else
             EventBus.getDefault().post(new PaymentRequestEvent(true, "Could not perform this operation. Please try again in a little while!"));
     }
 
