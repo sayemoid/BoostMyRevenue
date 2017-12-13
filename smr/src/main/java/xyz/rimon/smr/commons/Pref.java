@@ -14,6 +14,7 @@ public class Pref {
     public static final String PREF_SIZE = "prefSize";
     public static final String KEY_INITIALIZED = "initialized";
     public static final String KEY_LOGGED_IN = "loggedIn";
+    public static final String KEY_USER_REV_JSON = "userRevJson";
     public static final String KEY_CLIENT_ID = "nkjajsydc785345nr";
     public static final String KEY_CLIENT_SECRET = "jcfn4758rnjhdncrweiu";
     public static final String KEY_ACCESS_TOKEN = "jd8ehrukd746e84rn";

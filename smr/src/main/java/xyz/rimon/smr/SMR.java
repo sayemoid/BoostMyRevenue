@@ -3,7 +3,6 @@ package xyz.rimon.smr;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 
 import com.androidnetworking.AndroidNetworking;
 
@@ -12,7 +11,6 @@ import java.util.List;
 import xyz.rimon.ael.commons.utils.StorageUtil;
 import xyz.rimon.ael.domains.Event;
 import xyz.rimon.ael.logger.Ael;
-import xyz.rimon.smr.commons.Parser;
 import xyz.rimon.smr.commons.Pref;
 import xyz.rimon.smr.exceptions.InvalidException;
 import xyz.rimon.smr.model.User;
@@ -45,7 +43,7 @@ public class SMR {
             public void run() {
                 List<Event> eventList = StorageUtil.readObjects(context, StorageUtil.TEMP_FILE_NAME);
                 ApiClient.postEvent(context, eventList);
-                Log.d("LOG_ONLINE", Parser.getGson().toJson(eventList));
+//                Log.d("LOG_ONLINE", Parser.getGson().toJson(eventList));
             }
         }, 5000);
     }
