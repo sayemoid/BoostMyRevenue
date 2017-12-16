@@ -20,6 +20,8 @@ import xyz.rimon.smr.service.ApiClient;
  */
 
 public class SMR {
+    private SMR() {
+    }
 
     private static boolean LOCKED = false;
 
