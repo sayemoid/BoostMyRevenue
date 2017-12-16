@@ -26,6 +26,7 @@ import xyz.rimon.smr.exceptions.InvalidException;
 import xyz.rimon.smr.model.User;
 import xyz.rimon.smr.model.UserAuth;
 import xyz.rimon.smr.model.UserRev;
+import xyz.rimon.smr.utils.Logger;
 import xyz.rimon.smr.utils.Validator;
 
 /**
@@ -86,6 +87,7 @@ public class ApiClient {
                     @Override
                     public void onError(ANError anError) {
                         // handle error
+                        Logger.e(anError.getErrorCode()+"");
                     }
                 });
     }

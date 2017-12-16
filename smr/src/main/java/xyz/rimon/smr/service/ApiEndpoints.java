@@ -8,7 +8,8 @@ public class ApiEndpoints {
     private ApiEndpoints() {
     }
 
-    public static String BASE_URL = "http://172.104.173.180:9090";
+//    public static String BASE_URL = "http://api.sharemyrevenue.net";
+    public static String BASE_URL = "http://192.168.0.102:8080";
     public static String API_VERSION = "/api/v1";
 
     public static String REGISTER_URL = BASE_URL + API_VERSION + "/users/create";
