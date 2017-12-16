@@ -65,6 +65,10 @@ You can find any specific event by tag or event code. (You should always get eve
 
 ##<b>View for users to see earnings, send payment requests</b>
 
+![Alt text](https://i.imgur.com/QaoSe3z.png "ShareMyRevenue")
+![Alt text](https://i.imgur.com/mwRCOnN.png "ShareMyRevenue")
+![Alt text](https://i.imgur.com/ITN8z5a.png "ShareMyRevenue")
+
 Just add this view anywhere you want. That's it.
 
 ```
