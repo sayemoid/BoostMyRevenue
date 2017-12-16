@@ -20,6 +20,7 @@ import xyz.rimon.smr.events.RevenueLoadEvent;
 import xyz.rimon.smr.model.User;
 import xyz.rimon.smr.model.UserAuth;
 import xyz.rimon.smr.model.UserRev;
+import xyz.rimon.smr.utils.Logger;
 
 /**
  * Created by SAyEM on 4/12/17.
@@ -49,25 +50,25 @@ public class ResponseHandler {
             Pref.savePreference(context, Pref.KEY_LOGGED_IN, false);
             ApiClient.refreshToken(context);
         }
-        Log.i("AUTH", auth.toString());
+        Logger.i("AUTH " + auth.toString());
     }
 
     private static void onError(Response response) {
-        Log.e("ERROR_MSG", "RESPONSE_CODE:" + response.code() + "\nMESSAGE:" + response.message());
+        Logger.e("RESPONSE_CODE:" + response.code() + "\nMESSAGE:" + response.message());
     }
 
     public static void onError(ANError anError) {
-        Log.e("LOGIN_ERROR", anError.getErrorCode() + ":" + anError.getMessage());
+        Logger.e(anError.getErrorCode() + ":" + anError.getMessage());
     }
 
     public static void onPostEvent(Context context, Response response) {
         if (response.code() == 200) {
-            Log.i("POST_EVENT_CODE", String.valueOf(response.code()));
+            Logger.i(String.valueOf(response.code()));
             StorageUtil.clearObjects(context, StorageUtil.TEMP_FILE_NAME);
             EventBus.getDefault().post(new PostEventsEvent(true));
         } else if (response.code() == 401) {
             ApiClient.refreshToken(context);
-            Log.e("POST_EVENT_ERROR", response.code() + ": Access_token:" + Pref.getPreferenceString(context, Pref.KEY_ACCESS_TOKEN));
+            Logger.e(response.code() + ": Access_token:" + Pref.getPreferenceString(context, Pref.KEY_ACCESS_TOKEN));
         }
     }
 

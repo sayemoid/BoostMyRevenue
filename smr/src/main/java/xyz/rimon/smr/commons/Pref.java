@@ -76,7 +76,7 @@ public class Pref {
         Pref.savePreference(context, Pref.KEY_CLIENT_SECRET, clientSecret);
         Pref.savePreference(context, Pref.KEY_NAME, user.getName());
         Pref.savePreference(context, Pref.KEY_PASSWORD, user.getPassword());
-        Pref.savePreference(context, Pref.KEY_USERNAME, user.getUsername());
-        Pref.savePreference(context, Pref.KEY_EMAIL, user.getEmail());
+        Pref.savePreference(context, Pref.KEY_USERNAME, Commons.getClientIdSnapshot(clientId) + "__" + user.getUsername());
+        Pref.savePreference(context, Pref.KEY_EMAIL, Commons.getClientIdSnapshot(clientId) + "__" + user.getEmail());
     }
 }

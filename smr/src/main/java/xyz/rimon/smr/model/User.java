@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
+import xyz.rimon.smr.commons.Commons;
+
 /**
  * Created by SAyEM on 4/12/17.
  */
@@ -36,7 +38,13 @@ public class User {
     @SerializedName("credentialsNonExpired")
     private Boolean credentialsNonExpired;
 
-    public User() {
+    private User() {
+    }
+
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+        this.username = Commons.sliceUsername(email);
     }
 
     public User(String name, String username, String email, String password) {
