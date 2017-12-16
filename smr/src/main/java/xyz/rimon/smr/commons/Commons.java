@@ -12,7 +12,7 @@ public class Commons {
 
     public static String getClientIdSnapshot(String clientId) {
         if (clientId != null && clientId.length() >= 6)
-            return clientId.substring(0, 5);
+            return clientId.substring(0, 5)+"__";
         return "";
     }
 

@@ -19,6 +19,7 @@ import okhttp3.Response;
 import xyz.rimon.ael.domains.Event;
 import xyz.rimon.smr.SMR;
 import xyz.rimon.smr.commons.Auth;
+import xyz.rimon.smr.commons.Commons;
 import xyz.rimon.smr.commons.Parser;
 import xyz.rimon.smr.commons.Pref;
 import xyz.rimon.smr.model.User;
@@ -42,8 +43,8 @@ public class ApiClient {
                 .addBodyParameter(ApiEndpoints.KEY_CLIENT_ID_CAMELCASE, Pref.getPreferenceString(context, Pref.KEY_CLIENT_ID))
                 .addBodyParameter(ApiEndpoints.KEY_CLIENT_SECRET_CAMELCASE, Pref.getPreferenceString(context, Pref.KEY_CLIENT_SECRET))
                 .addBodyParameter(ApiEndpoints.KEY_NAME, user.getName())
-                .addBodyParameter(ApiEndpoints.KEY_EMAIL, user.getEmail())
-                .addBodyParameter(ApiEndpoints.KEY_USERNAME, user.getUsername())
+                .addBodyParameter(ApiEndpoints.KEY_EMAIL, Pref.getPreferenceString(context, Pref.KEY_EMAIL))
+                .addBodyParameter(ApiEndpoints.KEY_USERNAME, Pref.getPreferenceString(context, Pref.KEY_USERNAME))
                 .addBodyParameter(ApiEndpoints.KEY_PASSOWRD, user.getPassword())
                 .setTag("test")
                 .setPriority(Priority.MEDIUM)
@@ -66,11 +67,13 @@ public class ApiClient {
         if (!Pref.getPreference(context, Pref.KEY_INITIALIZED)) {
             reInitialize(context);
         }
+        String clientIdSnapshot = Commons.getClientIdSnapshot(Pref.getPreferenceString(context, Pref.KEY_CLIENT_ID));
+
         AndroidNetworking.get(ApiEndpoints.OAUTH_TOKEN_URL)
                 .addQueryParameter(ApiEndpoints.KEY_GRANT_TYPE, ApiEndpoints.VAL_PASSWORD)
                 .addQueryParameter(ApiEndpoints.KEY_CLIENT_ID, Pref.getPreferenceString(context, Pref.KEY_CLIENT_ID))
                 .addQueryParameter(ApiEndpoints.KEY_CLIENT_SECRET, Pref.getPreferenceString(context, Pref.KEY_CLIENT_SECRET))
-                .addQueryParameter(ApiEndpoints.KEY_USERNAME, Pref.getPreferenceString(context, Pref.KEY_USERNAME))
+                .addQueryParameter(ApiEndpoints.KEY_USERNAME, clientIdSnapshot + Pref.getPreferenceString(context, Pref.KEY_USERNAME))
                 .addQueryParameter(ApiEndpoints.KEY_PASSOWRD, Pref.getPreferenceString(context, Pref.KEY_PASSWORD))
                 .setTag("test")
                 .setPriority(Priority.MEDIUM)
