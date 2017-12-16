@@ -9,7 +9,6 @@ import java.util.regex.Pattern;
 
 import xyz.rimon.ael.commons.Commons;
 import xyz.rimon.smr.commons.Pref;
-import xyz.rimon.smr.exceptions.InvalidException;
 import xyz.rimon.smr.model.User;
 import xyz.rimon.smr.model.UserRev;
 
@@ -25,14 +24,14 @@ public class Validator {
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
 
-    public static void validateUser(User user) throws InvalidException {
+    public static void validateUser(User user) throws IllegalArgumentException {
         if (user == null) throw new IllegalArgumentException("User can not be null!");
         if (user.getEmail() == null || !Validator.isEmailValid(user.getEmail()))
-            throw new InvalidException("Email invalid!");
+            throw new IllegalArgumentException("Email invalid!");
         if (user.getUsername() == null || user.getUsername().length() < 6)
-            throw new InvalidException("Username length must be at least 6 characters. (Tips) Use a static namespace for your your users like: \'yourAppName-\'");
+            throw new IllegalArgumentException("Username length must be at least 6 characters. (Tips) Use a static namespace for your your users like: \'yourAppName-\'");
         if (user.getPassword() == null || user.getPassword().length() < 6)
-            throw new InvalidException("Password length must be at least 6 characters");
+            throw new IllegalArgumentException("Password length must be at least 6 characters");
     }
 
     public static boolean isEmailValid(String emailStr) {

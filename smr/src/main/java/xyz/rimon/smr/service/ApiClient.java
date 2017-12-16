@@ -1,7 +1,6 @@
 package xyz.rimon.smr.service;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -22,7 +21,6 @@ import xyz.rimon.smr.SMR;
 import xyz.rimon.smr.commons.Auth;
 import xyz.rimon.smr.commons.Parser;
 import xyz.rimon.smr.commons.Pref;
-import xyz.rimon.smr.exceptions.InvalidException;
 import xyz.rimon.smr.model.User;
 import xyz.rimon.smr.model.UserAuth;
 import xyz.rimon.smr.model.UserRev;
@@ -37,7 +35,7 @@ public class ApiClient {
     private ApiClient() {
     }
 
-    public static void registerUser(final Context context, final User user) throws InvalidException {
+    public static void registerUser(final Context context, final User user) {
         Validator.validateUser(user);
 
         AndroidNetworking.post(ApiEndpoints.REGISTER_URL)
@@ -87,7 +85,7 @@ public class ApiClient {
                     @Override
                     public void onError(ANError anError) {
                         // handle error
-                        Logger.e(anError.getErrorCode()+"");
+                        Logger.e(anError.getErrorCode() + "");
                     }
                 });
     }
@@ -171,11 +169,11 @@ public class ApiClient {
                 });
     }
 
-    public static void sendPaymentRequest(final Context context, String paymentMethod, String accountNumber, String amount){
+    public static void sendPaymentRequest(final Context context, String paymentMethod, String accountNumber, String amount) {
         AndroidNetworking.post(ApiEndpoints.POST_PAYMENT_REQUEST_URL)
                 .addQueryParameter(ApiEndpoints.KEY_ACCESS_TOKEN, Pref.getPreferenceString(context, Pref.KEY_ACCESS_TOKEN))
-                .addQueryParameter(ApiEndpoints.KEY_PAYMENT_METHOD,paymentMethod)
-                .addQueryParameter(ApiEndpoints.KEY_ACCOUNT_NUMBER,accountNumber)
+                .addQueryParameter(ApiEndpoints.KEY_PAYMENT_METHOD, paymentMethod)
+                .addQueryParameter(ApiEndpoints.KEY_ACCOUNT_NUMBER, accountNumber)
                 .addQueryParameter(ApiEndpoints.KEY_REQUEST_AMOUNT, amount)
                 .setTag("test")
                 .setPriority(Priority.MEDIUM)
@@ -200,16 +198,12 @@ public class ApiClient {
                 Pref.getPreferenceString(context, Pref.KEY_USERNAME),
                 Pref.getPreferenceString(context, Pref.KEY_EMAIL),
                 Pref.getPreferenceString(context, Pref.KEY_PASSWORD));
-        try {
-            SMR.initialize(
-                    context,
-                    Pref.getPreferenceString(context, Pref.KEY_CLIENT_ID),
-                    Pref.getPreferenceString(context, Pref.KEY_CLIENT_SECRET),
-                    user
-            );
-        } catch (InvalidException e) {
-            Log.e("USER_INVALID", e.toString());
-        }
+        SMR.initialize(
+                context,
+                Pref.getPreferenceString(context, Pref.KEY_CLIENT_ID),
+                Pref.getPreferenceString(context, Pref.KEY_CLIENT_SECRET),
+                user
+        );
     }
 
 }
