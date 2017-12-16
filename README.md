@@ -35,7 +35,8 @@ Click 'Show' button to copy your client id and secret.
 
 ```
     // On your application class
-    User user = new User("Name", "username", "email", "password");
+    User user = new User("Name", "email");
+    // User user = new User("Name", "username", "email", "password");
     SMR.initialize(getApplicationContext(), "client_id", "client_secret", user);
 ```
 
