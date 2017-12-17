@@ -40,7 +40,7 @@ public class SMR {
     }
 
     public static void logOnline(final Activity context, Event event) {
-        if (LOCKED) return;
+        if (LOCKED || isOptedOut(context)) return;
         LOCKED = true;
         StorageUtil.writeObject(context, StorageUtil.TEMP_FILE_NAME, event);
         new Handler().postDelayed(new Runnable() {
@@ -51,6 +51,11 @@ public class SMR {
                 LOCKED = false;
             }
         }, 10000);
+    }
+
+    private static boolean isOptedOut(Context context) {
+        return !Pref.getPreference(context, Pref.USER_OPT_IN);
+
     }
 
 }

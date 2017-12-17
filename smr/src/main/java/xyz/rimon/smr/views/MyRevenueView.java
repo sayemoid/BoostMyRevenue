@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -27,6 +26,7 @@ import xyz.rimon.smr.R;
 import xyz.rimon.smr.commons.Pref;
 import xyz.rimon.smr.events.ConfirmationEvent;
 import xyz.rimon.smr.events.LoginEvent;
+import xyz.rimon.smr.events.OptInOutEvent;
 import xyz.rimon.smr.events.PaymentRequestEvent;
 import xyz.rimon.smr.events.PostEventsEvent;
 import xyz.rimon.smr.events.RevenueLoadEvent;
@@ -52,6 +52,7 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
     private EditText etAccountNumber;
     private EditText etAmount;
     private Button btnSendRequest;
+    private TextView btnOptInOut;
 
     public MyRevenueView(Context context) {
         super(context);
@@ -66,11 +67,6 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
     private void initView() {
         LayoutInflater.from(getContext()).inflate(R.layout.my_revenue_view, this);
         EventBus.getDefault().register(this);
-
-        // set default visibility of this view
-        if (isSignupPermissionConfirmed())
-            this.setVisibility(VISIBLE);
-        else this.setVisibility(GONE);
 
         this.cmInterationPoints = this.findViewById(R.id.cmInteractionPoints);
         this.cmIncome = this.findViewById(R.id.cmIncome);
@@ -88,22 +84,13 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
         this.etAccountNumber = this.findViewById(R.id.etAccountNumber);
         this.etAmount = this.findViewById(R.id.etAmount);
         this.btnSendRequest = this.findViewById(R.id.btnSendRequest);
+        this.btnOptInOut = this.findViewById(R.id.btnOptInOut);
 
         this.btnSendRequest.setOnClickListener(this);
+        this.btnOptInOut.setOnClickListener(this);
+        resolveOptInOutButton(isOptedIn());
 
         this.loadUserRevenue();
-
-        if (!isConfirmationDialogShown())
-            UIUtils.showConfimationDialog(
-                    getContext(),
-                    "Sign up for ShareMyRevenue programme",
-                    "ShareMyRevenue is a revenue sharing programme for the developers/company to share a percentage of their revenue among their users. That means you'll get paid by using this app according to your interactions.\n\n" +
-                            "What you\'ll be able to do by signing up?\n\n" +
-                            "-> Earn interaction points when you use the app.\n" +
-                            "-> Those points will be converted to money every months.\n" +
-                            "-> You'll be able to send payment requests when your earning meets the threshold.\n\n" +
-                            "By clicking \"Ok\", you agree to our terms of service and privacy policy(https://www.sharemyrevenue.net/privacy-policy)."
-            );
 
     }
 
@@ -122,6 +109,7 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
         this.pmIncome.setText("৳" + String.valueOf(userRev.getPreviousMonthIncome()));
         this.cmIncome.setText("৳" + String.valueOf(userRev.getCurrentBalance()));
         this.cmInterationPoints.setText(String.valueOf(userRev.getCurrentMonthInteractionPoints()));
+
     }
 
     @Subscribe
@@ -134,6 +122,26 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
     public void onEventListPostEvent(PostEventsEvent event) {
         if (event.isSuccess())
             this.loadUserRevenue();
+    }
+
+    @Subscribe
+    public void onPaymentRequestSendEvent(PaymentRequestEvent event) {
+        if (event.isSuccess()) {
+            UIUtils.showDialog(getContext(), "Success!", "Successfully sent a payment request!");
+            this.paymentView.setVisibility(GONE);
+        } else
+            UIUtils.showDialog(getContext(), "Error!!", event.getErrorMessage());
+    }
+
+    @Subscribe
+    public void onDialogConfirmationEvent(ConfirmationEvent e) {
+        this.setOptedIn(e.isStatus());
+        this.resolveOptInOutButton(e.isStatus());
+    }
+
+    @Subscribe
+    public void onOptInOutEvent(OptInOutEvent e) {
+        resolveOptInOutButton(e.isStatus());
     }
 
     private void loadUserRevenue() {
@@ -159,28 +167,34 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
             ApiClient.sendPaymentRequest(getContext(), this.paymentMethod, this.etAccountNumber.getText().toString(), this.etAmount.getText().toString());
         } else if (id == R.id.tvRequestPaymentToggle) {
             this.toggleRequestFormVisibility();
+        } else if (id == R.id.btnOptInOut) {
+            UIUtils.optInOutConfimationDialog(getContext(), isOptedIn());
         }
     }
 
-    @Subscribe
-    public void onPaymentRequestSendEvent(PaymentRequestEvent event) {
-        if (event.isSuccess()) {
-            UIUtils.showDialog(getContext(), "Success!", "Successfully sent a payment request!");
-            this.paymentView.setVisibility(GONE);
-        } else
-            UIUtils.showDialog(getContext(), "Error!!", event.getErrorMessage());
-    }
+    private void resolveOptInOutButton(boolean optedIn) {
+        if (!isConfirmationDialogShown()) {
+            UIUtils.showConfimationDialog(
+                    getContext(),
+                    "Sign up for ShareMyRevenue programme",
+                    "ShareMyRevenue is a revenue sharing programme for the developers/companies to share a percentage of their revenue among their users. That means you'll get paid by using this app according to your interactions.\n\n" +
+                            "What you\'ll be able to do by signing up?\n\n" +
+                            "-> Earn interaction points when you use the app.\n" +
+                            "-> Those points will be converted to money every months.\n" +
+                            "-> You'll be able to send payment requests when your earning meets the threshold.\n\n" +
+                            "By clicking \"Ok\", you agree to our terms of service and privacy policy(https://www.sharemyrevenue.net/privacy-policy)."
+            );
+            return;
+        }
 
-    @Subscribe
-    public void onDialogConfirmationEvent(ConfirmationEvent e) {
-        if (e.isStatus()) {
-            Pref.savePreference(getContext(), Pref.KEY_SMR_SIGNUP_DIALOG_CONFIRM, true);
-            this.setVisibility(VISIBLE);
-            Toast.makeText(e.getContext(), "OK", Toast.LENGTH_SHORT).show();
+        if (optedIn) {
+            this.setOptedIn(true);
+            this.btnOptInOut.setText("Opt Out");
+            this.btnOptInOut.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
         } else {
-            this.setVisibility(GONE);
-            Pref.savePreference(getContext(), Pref.KEY_SMR_SIGNUP_DIALOG_CONFIRM, false);
-            Toast.makeText(e.getContext(), "NO", Toast.LENGTH_SHORT).show();
+            this.setOptedIn(false);
+            this.btnOptInOut.setText("Opt in again");
+            this.btnOptInOut.setTextColor(getResources().getColor(android.R.color.holo_green_light));
         }
     }
 
@@ -219,10 +233,14 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
     }
 
     public boolean isConfirmationDialogShown() {
-        return !Pref.isNull(getContext(), Pref.KEY_SMR_SIGNUP_DIALOG_CONFIRM);
+        return !Pref.isNull(getContext(), Pref.USER_OPT_IN);
     }
 
-    public boolean isSignupPermissionConfirmed() {
-        return Pref.getPreference(getContext(), Pref.KEY_SMR_SIGNUP_DIALOG_CONFIRM);
+    public boolean isOptedIn() {
+        return Pref.getPreference(getContext(), Pref.USER_OPT_IN);
+    }
+
+    private void setOptedIn(boolean optedIn) {
+        Pref.savePreference(getContext(), Pref.USER_OPT_IN, optedIn);
     }
 }
