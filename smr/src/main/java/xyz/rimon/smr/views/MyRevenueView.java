@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -24,13 +25,14 @@ import java.util.Locale;
 import xyz.rimon.ael.commons.Commons;
 import xyz.rimon.smr.R;
 import xyz.rimon.smr.commons.Pref;
-import xyz.rimon.smr.commons.UIUtils;
+import xyz.rimon.smr.events.ConfirmationEvent;
 import xyz.rimon.smr.events.LoginEvent;
 import xyz.rimon.smr.events.PaymentRequestEvent;
 import xyz.rimon.smr.events.PostEventsEvent;
 import xyz.rimon.smr.events.RevenueLoadEvent;
 import xyz.rimon.smr.model.UserRev;
 import xyz.rimon.smr.service.ApiClient;
+import xyz.rimon.smr.utils.UIUtils;
 import xyz.rimon.smr.utils.Validator;
 
 /**
@@ -65,6 +67,11 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
         LayoutInflater.from(getContext()).inflate(R.layout.my_revenue_view, this);
         EventBus.getDefault().register(this);
 
+        // set default visibility of this view
+        if (isSignupPermissionConfirmed())
+            this.setVisibility(VISIBLE);
+        else this.setVisibility(GONE);
+
         this.cmInterationPoints = this.findViewById(R.id.cmInteractionPoints);
         this.cmIncome = this.findViewById(R.id.cmIncome);
         this.lastPaymentAmount = this.findViewById(R.id.lastPaymentAmount);
@@ -85,6 +92,19 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
         this.btnSendRequest.setOnClickListener(this);
 
         this.loadUserRevenue();
+
+        if (!isConfirmationDialogShown())
+            UIUtils.showConfimationDialog(
+                    getContext(),
+                    "Sign up for ShareMyRevenue programme",
+                    "ShareMyRevenue is a revenue sharing programme for the developers/company to share a percentage of their revenue among their users. That means you'll get paid by using this app according to your interactions.\n\n" +
+                            "What you\'ll be able to do by signing up?\n\n" +
+                            "-> Earn interaction points when you use the app.\n" +
+                            "-> Those points will be converted to money every months.\n" +
+                            "-> You'll be able to send payment requests when your earning meets the threshold.\n\n" +
+                            "By clicking \"Ok\", you agree to our terms of service and privacy policy(https://www.sharemyrevenue.net/privacy-policy)."
+            );
+
     }
 
     @Subscribe
@@ -151,13 +171,26 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
             UIUtils.showDialog(getContext(), "Error!!", event.getErrorMessage());
     }
 
+    @Subscribe
+    public void onDialogConfirmationEvent(ConfirmationEvent e) {
+        if (e.isStatus()) {
+            Pref.savePreference(getContext(), Pref.KEY_SMR_SIGNUP_DIALOG_CONFIRM, true);
+            this.setVisibility(VISIBLE);
+            Toast.makeText(e.getContext(), "OK", Toast.LENGTH_SHORT).show();
+        } else {
+            this.setVisibility(GONE);
+            Pref.savePreference(getContext(), Pref.KEY_SMR_SIGNUP_DIALOG_CONFIRM, false);
+            Toast.makeText(e.getContext(), "NO", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
         if (position == 0) {
             this.btnSendRequest.setEnabled(false);
             this.btnSendRequest.setText("Please select a payment method");
             this.btnSendRequest.setTextColor(getResources().getColor(android.R.color.holo_red_light));
-        }else {
+        } else {
             this.btnSendRequest.setEnabled(true);
             this.btnSendRequest.setText("Send Request");
             this.btnSendRequest.setTextColor(getResources().getColor(android.R.color.holo_green_light));
@@ -183,5 +216,13 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
         if (this.btnSendRequest.getVisibility() == View.GONE)
             this.btnSendRequest.setVisibility(View.VISIBLE);
         else this.btnSendRequest.setVisibility(View.GONE);
+    }
+
+    public boolean isConfirmationDialogShown() {
+        return !Pref.isNull(getContext(), Pref.KEY_SMR_SIGNUP_DIALOG_CONFIRM);
+    }
+
+    public boolean isSignupPermissionConfirmed() {
+        return Pref.getPreference(getContext(), Pref.KEY_SMR_SIGNUP_DIALOG_CONFIRM);
     }
 }

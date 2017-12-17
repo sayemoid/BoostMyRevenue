@@ -23,6 +23,8 @@ public class Pref {
     public static final String KEY_PASSWORD = "fjkhui3y4dqjk32io";
     public static final String KEY_USERNAME = "jr6843ge38fwyhjwu";
     public static final String KEY_EMAIL = "kfjwduyri2uew897435";
+
+    public static final String KEY_SMR_SIGNUP_DIALOG_CONFIRM = "ds564f6435252fr6gy";
 //    public static final String PREF_ACCOUNT_ID = "fb_account_kit_id";
 
     public static void savePreference(Context context, String key, boolean value) {
