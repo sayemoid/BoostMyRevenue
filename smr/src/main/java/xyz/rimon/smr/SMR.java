@@ -25,21 +25,29 @@ public class SMR {
 
     private static boolean LOCKED = false;
 
-    public static void initialize(Context context, String clientId, String clientSecret, User user) {
+    public static void initialize(Context context, String clientId, String clientSecret) {
         if (clientId == null || clientSecret == null)
             throw new IllegalArgumentException("Client id or secret can not be null");
-        if (user.getPassword() == null) user.setPassword(clientId);
-        Pref.saveCredentials(context, clientId, clientSecret, user);
+        Pref.saveCredentials(context, clientId, clientSecret, null);
         AndroidNetworking.initialize(context);
-        ApiClient.registerUser(context, user);
     }
 
+    public static void setUser(Context context, String name, String email) {
+        if (Pref.isNull(context, Pref.KEY_CLIENT_ID) || Pref.isNull(context, Pref.KEY_CLIENT_ID))
+            throw new RuntimeException("Have you initialized by calling SMR.initialize(Context context, String clientId, String clientSecret) method?");
+        User user = new User(name, email);
+        Pref.saveUser(context, user);
+        ApiClient.registerUser(context, user);
+    }
 
     public static void logOffline(Activity context, Event event) {
         Ael.logEvent(context, event);
     }
 
     public static void logOnline(final Activity context, Event event) {
+        if (Pref.isNull(context, Pref.KEY_NAME) || Pref.isNull(context, Pref.KEY_EMAIL))
+            throw new RuntimeException("Have you set user by calling SMR.setUser(Context context, String name, String email) method?");
+
         if (LOCKED || isOptedOut(context)) return;
         LOCKED = true;
         StorageUtil.writeObject(context, StorageUtil.TEMP_FILE_NAME, event);

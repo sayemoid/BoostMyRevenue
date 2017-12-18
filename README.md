@@ -35,9 +35,12 @@ Click 'Show' button to copy your client id and secret.
 
 ```
     // On your application class
-    User user = new User("Name", "email");
-    // User user = new User("Name", "username", "email", "password");
-    SMR.initialize(getApplicationContext(), "client_id", "client_secret", user);
+    SMR.initialize(getApplicationContext(), "client_id", "client_secret");
+```
+<b>Get User info and set user</b>
+```
+    SMR.setUser(this, "John Doe", "example@example.com");
+
 ```
 
 ###Now you just have to log user interactions

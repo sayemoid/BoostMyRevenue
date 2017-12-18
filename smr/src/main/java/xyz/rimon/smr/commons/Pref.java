@@ -20,7 +20,7 @@ public class Pref {
     public static final String KEY_ACCESS_TOKEN = "jd8ehrukd746e84rn";
     public static final String KEY_REFRESH_TOKEN = "bfic8r7wcyrheudr874";
     public static final String KEY_NAME = "jfiuekwhld8487h";
-    public static final String KEY_PASSWORD = "fjkhui3y4dqjk32io";
+//    public static final String KEY_PASSWORD = "fjkhui3y4dqjk32io";
     public static final String KEY_USERNAME = "jr6843ge38fwyhjwu";
     public static final String KEY_EMAIL = "kfjwduyri2uew897435";
 
@@ -76,10 +76,20 @@ public class Pref {
     public static void saveCredentials(Context context, String clientId, String clientSecret, User user) {
         Pref.savePreference(context, Pref.KEY_CLIENT_ID, clientId);
         Pref.savePreference(context, Pref.KEY_CLIENT_SECRET, clientSecret);
+        if (user != null) {
+            Pref.savePreference(context, Pref.KEY_NAME, user.getName());
+//            Pref.savePreference(context, Pref.KEY_PASSWORD, user.getPassword());
+            Pref.savePreference(context, Pref.KEY_USERNAME, user.getUsername());
+            Pref.savePreference(context, Pref.KEY_EMAIL, user.getEmail());
+        }
+    }
+
+    public static void saveUser(Context context, User user) {
+        if (user == null) throw new IllegalArgumentException("User can not be null");
+
         Pref.savePreference(context, Pref.KEY_NAME, user.getName());
-        Pref.savePreference(context, Pref.KEY_PASSWORD, user.getPassword());
+//        Pref.savePreference(context, Pref.KEY_PASSWORD, user.getPassword());
         Pref.savePreference(context, Pref.KEY_USERNAME, user.getUsername());
         Pref.savePreference(context, Pref.KEY_EMAIL, user.getEmail());
-
     }
 }

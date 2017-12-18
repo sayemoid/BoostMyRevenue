@@ -45,7 +45,7 @@ public class ApiClient {
                 .addBodyParameter(ApiEndpoints.KEY_NAME, user.getName())
                 .addBodyParameter(ApiEndpoints.KEY_EMAIL, Pref.getPreferenceString(context, Pref.KEY_EMAIL))
                 .addBodyParameter(ApiEndpoints.KEY_USERNAME, Pref.getPreferenceString(context, Pref.KEY_USERNAME))
-                .addBodyParameter(ApiEndpoints.KEY_PASSOWRD, user.getPassword())
+                .addBodyParameter(ApiEndpoints.KEY_PASSOWRD, Pref.getPreferenceString(context, Pref.KEY_CLIENT_ID))
                 .setTag("test")
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -74,7 +74,7 @@ public class ApiClient {
                 .addQueryParameter(ApiEndpoints.KEY_CLIENT_ID, Pref.getPreferenceString(context, Pref.KEY_CLIENT_ID))
                 .addQueryParameter(ApiEndpoints.KEY_CLIENT_SECRET, Pref.getPreferenceString(context, Pref.KEY_CLIENT_SECRET))
                 .addQueryParameter(ApiEndpoints.KEY_USERNAME, clientIdSnapshot + Pref.getPreferenceString(context, Pref.KEY_USERNAME))
-                .addQueryParameter(ApiEndpoints.KEY_PASSOWRD, Pref.getPreferenceString(context, Pref.KEY_PASSWORD))
+                .addQueryParameter(ApiEndpoints.KEY_PASSOWRD, Pref.getPreferenceString(context, Pref.KEY_CLIENT_ID))
                 .setTag("test")
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -196,17 +196,10 @@ public class ApiClient {
 
 
     private static void reInitialize(Context context) {
-        User user = new User(
+        SMR.setUser(context,
                 Pref.getPreferenceString(context, Pref.KEY_NAME),
-                Pref.getPreferenceString(context, Pref.KEY_USERNAME),
-                Pref.getPreferenceString(context, Pref.KEY_EMAIL),
-                Pref.getPreferenceString(context, Pref.KEY_PASSWORD));
-        SMR.initialize(
-                context,
-                Pref.getPreferenceString(context, Pref.KEY_CLIENT_ID),
-                Pref.getPreferenceString(context, Pref.KEY_CLIENT_SECRET),
-                user
-        );
+                Pref.getPreferenceString(context, Pref.KEY_EMAIL));
+
     }
 
 }
