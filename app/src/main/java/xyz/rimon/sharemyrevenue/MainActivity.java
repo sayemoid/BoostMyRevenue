@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SMR.setUser(this, "Test Name", "test4@gmail.com");
+
         Button initButton = this.findViewById(R.id.btnInitialize);
         initButton.setOnClickListener(new View.OnClickListener() {
             @Override

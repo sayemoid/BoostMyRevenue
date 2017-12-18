@@ -28,10 +28,10 @@ public class Validator {
         if (user == null) throw new IllegalArgumentException("User can not be null!");
         if (user.getEmail() == null || !Validator.isEmailValid(user.getEmail()))
             throw new IllegalArgumentException("Email invalid!");
-        if (user.getUsername() == null || user.getUsername().length() < 6)
-            throw new IllegalArgumentException("Username length must be at least 6 characters. (Tips) Use a static namespace for your your users like: \'yourAppName-\'");
-        if (user.getPassword() == null || user.getPassword().length() < 6)
-            throw new IllegalArgumentException("Password length must be at least 6 characters");
+        if (user.getUsername() == null)
+            throw new IllegalArgumentException("Username can not be null!");
+//        if (user.getPassword() == null || user.getPassword().length() < 6)
+//            throw new IllegalArgumentException("Password length must be at least 6 characters");
     }
 
     public static boolean isEmailValid(String emailStr) {
