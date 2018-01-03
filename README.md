@@ -15,7 +15,7 @@ allprojects {
 }
 	
 dependencies {
-    compile 'com.github.sayemkcn:ShareMyRevenue:v0.9.3-beta'
+	compile 'com.github.sayemkcn:ShareMyRevenue:v1.0.0-beta'
 }
 
 ```
@@ -39,6 +39,9 @@ Click 'Show' button to copy your client id and secret.
 ```
 <b>Get User info and set user</b>
 ```
+    SMR.setUser(this, "John Doe"); // Will take the device primary email address to create account
+
+    // Or, if users email address is verified by you, you can set it yourself
     SMR.setUser(this, "John Doe", "example@example.com");
 
 ```
