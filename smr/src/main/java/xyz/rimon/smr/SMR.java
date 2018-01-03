@@ -11,6 +11,7 @@ import java.util.List;
 import xyz.rimon.ael.commons.utils.StorageUtil;
 import xyz.rimon.ael.domains.Event;
 import xyz.rimon.ael.logger.Ael;
+import xyz.rimon.smr.commons.Commons;
 import xyz.rimon.smr.commons.Pref;
 import xyz.rimon.smr.model.User;
 import xyz.rimon.smr.service.ApiClient;
@@ -30,6 +31,15 @@ public class SMR {
             throw new IllegalArgumentException("Client id or secret can not be null");
         Pref.saveCredentials(context, clientId, clientSecret, null);
         AndroidNetworking.initialize(context);
+        // opt in user by default
+        Pref.savePreference(context,Pref.USER_OPT_IN,true);
+    }
+
+    public static void setUser(Activity context,String name){
+        Pref.savePreference(context,Pref.KEY_NAME,name);
+        String email = Commons.getPrimaryEmailAddress(context);
+        if (email==null) return;
+        setUser(context,name, email);
     }
 
     public static void setUser(Context context, String name, String email) {
@@ -45,6 +55,11 @@ public class SMR {
     }
 
     public static void logOnline(final Activity context, Event event) {
+        if (isUserSetButNotEmail(context)){
+            setUser(context,Pref.getPreferenceString(context,Pref.KEY_NAME));
+            return;
+        }
+
         if (Pref.isNull(context, Pref.KEY_NAME) || Pref.isNull(context, Pref.KEY_EMAIL))
             throw new RuntimeException("Have you set user by calling SMR.setUser(Context context, String name, String email) method?");
 
@@ -63,7 +78,9 @@ public class SMR {
 
     private static boolean isOptedOut(Context context) {
         return !Pref.getPreference(context, Pref.USER_OPT_IN);
-
+    }
+    private static boolean isUserSetButNotEmail(Context context){
+        return Pref.isNull(context,Pref.KEY_EMAIL) && !Pref.isNull(context,Pref.KEY_NAME);
     }
 
 }

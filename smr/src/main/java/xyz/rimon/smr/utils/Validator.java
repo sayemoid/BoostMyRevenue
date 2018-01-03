@@ -35,6 +35,7 @@ public class Validator {
     }
 
     public static boolean isEmailValid(String emailStr) {
+        if (emailStr==null) return false;
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
         return matcher.find();
     }
