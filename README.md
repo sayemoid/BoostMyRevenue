@@ -1,4 +1,4 @@
-# [ShareMyRevenue](http://www.sharemyrevenue.net)
+# [ShareMyRevenue](http://www.sharemyrevenue.net) [Javadoc](https://www.sharemyrevenue.net/docs/javadoc/index.html)
 *Share a percentage of your revenue among your users, grow your company!* 
 *By simply logging their interactions.*
 
