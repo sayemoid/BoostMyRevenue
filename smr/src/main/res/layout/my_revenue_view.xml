@@ -25,11 +25,13 @@
                 <ImageView
                     android:layout_width="16dp"
                     android:layout_height="16dp"
+                    android:id="@+id/smrLogo"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:src="@drawable/smr_logo" />
 
                 <TextView
+                    android:id="@+id/smrTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -48,6 +50,7 @@
             </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/actualNumbersLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"

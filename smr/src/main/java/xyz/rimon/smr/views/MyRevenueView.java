@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ import xyz.rimon.smr.events.PostEventsEvent;
 import xyz.rimon.smr.events.RevenueLoadEvent;
 import xyz.rimon.smr.model.UserRev;
 import xyz.rimon.smr.service.ApiClient;
+import xyz.rimon.smr.service.ApiEndpoints;
 import xyz.rimon.smr.utils.UIUtils;
 import xyz.rimon.smr.utils.Validator;
 
@@ -46,6 +48,7 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
     private TextView pmIncome;
 
     private View paymentView;
+    private View actualNumbersLayout;
     private TextView tvRequestPaymentToggle;
     private Spinner spnPaymentMethod;
     private String paymentMethod;
@@ -53,6 +56,9 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
     private EditText etAmount;
     private Button btnSendRequest;
     private TextView btnOptInOut;
+
+    private ImageView smrLogo;
+    private TextView smrTitle;
 
     public MyRevenueView(Context context) {
         super(context);
@@ -74,6 +80,7 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
         this.pmIncome = this.findViewById(R.id.pmIncome);
 
         this.paymentView = this.findViewById(R.id.paymentView);
+        this.actualNumbersLayout = this.findViewById(R.id.actualNumbersLayout);
         this.tvRequestPaymentToggle = this.findViewById(R.id.tvRequestPaymentToggle);
         this.tvRequestPaymentToggle.setOnClickListener(this);
         String[] paymentMethods = getContext().getResources().getStringArray(R.array.paymentMethods);
@@ -85,11 +92,15 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
         this.etAmount = this.findViewById(R.id.etAmount);
         this.btnSendRequest = this.findViewById(R.id.btnSendRequest);
         this.btnOptInOut = this.findViewById(R.id.btnOptInOut);
+        this.smrLogo = this.findViewById(R.id.smrLogo);
+        this.smrTitle = this.findViewById(R.id.smrTitle);
 
         this.btnSendRequest.setOnClickListener(this);
         this.btnOptInOut.setOnClickListener(this);
-        resolveOptInOutButton(isOptedIn());
+        this.smrLogo.setOnClickListener(this);
+        this.smrTitle.setOnClickListener(this);
 
+        this.resolveOptInOutButton(isOptedIn());
         this.loadUserRevenue();
 
     }
@@ -169,6 +180,8 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
             this.toggleRequestFormVisibility();
         } else if (id == R.id.btnOptInOut) {
             UIUtils.optInOutConfimationDialog(getContext(), isOptedIn());
+        } else if (id == R.id.smrLogo || id == R.id.smrTitle) {
+            xyz.rimon.smr.commons.Commons.openUrl(getContext(), ApiEndpoints.HOME_URL);
         }
     }
 
@@ -192,10 +205,12 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
             this.setOptedIn(true);
             this.btnOptInOut.setText("Opt Out");
             this.btnOptInOut.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+            this.actualNumbersLayout.setVisibility(VISIBLE);
         } else {
             this.setOptedIn(false);
             this.btnOptInOut.setText("Opt in again");
             this.btnOptInOut.setTextColor(getResources().getColor(android.R.color.holo_green_light));
+            this.actualNumbersLayout.setVisibility(GONE);
         }
     }
 

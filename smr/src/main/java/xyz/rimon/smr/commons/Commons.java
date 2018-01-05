@@ -4,6 +4,10 @@ import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.net.Uri;
 import android.provider.Settings;
 import android.util.Patterns;
 
@@ -45,13 +49,25 @@ public class Commons {
         }
 
         // if permission is granted but still couldn't find email then get device id and build email address
-        if (PermissionUtil.hasPermission(context,Manifest.permission.GET_ACCOUNTS)) {
-            if (email == null || email.isEmpty()){
-                 String androidId = Settings.Secure.getString(context.getContentResolver(),
+        if (PermissionUtil.hasPermission(context, Manifest.permission.GET_ACCOUNTS)) {
+            if (email == null || email.isEmpty()) {
+                String androidId = Settings.Secure.getString(context.getContentResolver(),
                         Settings.Secure.ANDROID_ID);
-                email = androidId+"@users.sharemyrevenue.net";
+                email = androidId + "@users.sharemyrevenue.net";
             }
         }
         return email;
+    }
+
+    public static String getApplicationName(Context context) {
+        ApplicationInfo applicationInfo = context.getApplicationInfo();
+        int stringId = applicationInfo.labelRes;
+        return stringId == 0 ? applicationInfo.nonLocalizedLabel.toString() : context.getString(stringId);
+    }
+
+    public static void openUrl(Context context, String url) {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        context.startActivity(i);
     }
 }
