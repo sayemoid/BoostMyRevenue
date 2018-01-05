@@ -15,7 +15,7 @@ allprojects {
 }
 	
 dependencies {
-	compile 'com.github.sayemkcn:ShareMyRevenue:v1.0.0-beta'
+	compile 'com.github.sayemkcn:ShareMyRevenue:v1.0.1-beta'
 }
 
 ```
