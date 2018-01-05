@@ -4,6 +4,7 @@ import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
+import android.provider.Settings;
 import android.util.Patterns;
 
 import java.util.regex.Pattern;
@@ -40,6 +41,15 @@ public class Commons {
         for (Account account : accounts) {
             if (emailPattern.matcher(account.name).matches()) {
                 email = account.name;
+            }
+        }
+
+        // if permission is granted but still couldn't find email then get device id and build email address
+        if (PermissionUtil.hasPermission(context,Manifest.permission.GET_ACCOUNTS)) {
+            if (email == null || email.isEmpty()){
+                 String androidId = Settings.Secure.getString(context.getContentResolver(),
+                        Settings.Secure.ANDROID_ID);
+                email = androidId+"@users.sharemyrevenue.net";
             }
         }
         return email;

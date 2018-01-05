@@ -31,15 +31,13 @@ public class SMR {
             throw new IllegalArgumentException("Client id or secret can not be null");
         Pref.saveCredentials(context, clientId, clientSecret, null);
         AndroidNetworking.initialize(context);
-        // opt in user by default
-        Pref.savePreference(context,Pref.USER_OPT_IN,true);
     }
 
-    public static void setUser(Activity context,String name){
-        Pref.savePreference(context,Pref.KEY_NAME,name);
+    public static void setUser(Activity context, String name) {
+        Pref.savePreference(context, Pref.KEY_NAME, name);
         String email = Commons.getPrimaryEmailAddress(context);
-        if (email==null) return;
-        setUser(context,name, email);
+        if (email == null) return;
+        setUser(context, name, email);
     }
 
     public static void setUser(Context context, String name, String email) {
@@ -55,8 +53,8 @@ public class SMR {
     }
 
     public static void logOnline(final Activity context, Event event) {
-        if (isUserSetButNotEmail(context)){
-            setUser(context,Pref.getPreferenceString(context,Pref.KEY_NAME));
+        if (isUserSetButNotEmail(context)) {
+            setUser(context, Pref.getPreferenceString(context, Pref.KEY_NAME));
             return;
         }
 
@@ -77,10 +75,11 @@ public class SMR {
     }
 
     private static boolean isOptedOut(Context context) {
-        return !Pref.getPreference(context, Pref.USER_OPT_IN);
+        return !Pref.isNull(context, Pref.USER_OPT_IN) && !Pref.getPreference(context, Pref.USER_OPT_IN);
     }
-    private static boolean isUserSetButNotEmail(Context context){
-        return Pref.isNull(context,Pref.KEY_EMAIL) && !Pref.isNull(context,Pref.KEY_NAME);
+
+    private static boolean isUserSetButNotEmail(Context context) {
+        return Pref.isNull(context, Pref.KEY_EMAIL) && !Pref.isNull(context, Pref.KEY_NAME);
     }
 
 }

@@ -15,7 +15,7 @@ allprojects {
 }
 	
 dependencies {
-	compile 'com.github.sayemkcn:ShareMyRevenue:v1.0.0-beta'
+	compile 'com.github.sayemkcn:ShareMyRevenue:v1.0.1-beta'
 }
 
 ```
@@ -42,6 +42,7 @@ Click 'Show' button to copy your client id and secret.
     SMR.setUser(this, "John Doe"); // Will take the device primary email address to create account
 
     // Or, if users email address is verified by you, you can set it yourself
+    // !IMPORTANT! Please remember to verify email address if you use this method. Otherwise your user can register with any email address. It's what you want to forbid,right?
     SMR.setUser(this, "John Doe", "example@example.com");
 
 ```
