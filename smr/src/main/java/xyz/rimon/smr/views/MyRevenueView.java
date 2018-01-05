@@ -181,7 +181,8 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
                             "What you\'ll be able to do by signing up?\n\n" +
                             "-> Earn interaction points when you use the app.\n" +
                             "-> Those points will be converted to money every months.\n" +
-                            "-> You'll be able to send payment requests when your earning meets the threshold.\n\n" +
+                            "-> You'll be able to send payment requests when your earning meets the threshold.\n" +
+                            "-> You'll NOT get paid by clicking any kind of ad.\n\n" +
                             "By clicking \"Ok\", you agree to our terms of service and privacy policy(https://www.sharemyrevenue.net/privacy-policy)."
             );
             return;
