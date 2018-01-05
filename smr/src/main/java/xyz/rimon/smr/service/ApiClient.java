@@ -46,6 +46,8 @@ public class ApiClient {
                 .addBodyParameter(ApiEndpoints.KEY_EMAIL, Pref.getPreferenceString(context, Pref.KEY_EMAIL))
                 .addBodyParameter(ApiEndpoints.KEY_USERNAME, Pref.getPreferenceString(context, Pref.KEY_USERNAME))
                 .addBodyParameter(ApiEndpoints.KEY_PASSOWRD, Pref.getPreferenceString(context, Pref.KEY_CLIENT_ID))
+                .addBodyParameter(ApiEndpoints.KEY_APP_NAME, Commons.getApplicationName(context))
+                .addBodyParameter(ApiEndpoints.KEY_APP_PACKAGE_NAME, context.getPackageName())
                 .setTag("test")
                 .setPriority(Priority.MEDIUM)
                 .build()
