@@ -116,9 +116,9 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
     private void updateViews(UserRev userRev) {
         if (userRev.isCanRequestForPayment())
             this.paymentView.setVisibility(VISIBLE);
-        this.lastPaymentAmount.setText(String.valueOf("৳" + userRev.getLastPaymentAmount()));
-        this.pmIncome.setText("৳" + String.valueOf(userRev.getPreviousMonthIncome()));
-        this.cmIncome.setText("৳" + String.valueOf(userRev.getCurrentBalance()));
+        this.lastPaymentAmount.setText(String.valueOf(userRev.getLastPaymentAmount()));
+        this.pmIncome.setText(String.valueOf(userRev.getPreviousMonthIncome()));
+        this.cmIncome.setText(String.valueOf(userRev.getCurrentBalance()));
         this.cmInterationPoints.setText(String.valueOf(userRev.getCurrentMonthInteractionPoints()));
 
     }
