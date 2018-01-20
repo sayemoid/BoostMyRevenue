@@ -70,4 +70,15 @@ public class Commons {
         i.setData(Uri.parse(url));
         context.startActivity(i);
     }
+
+    public static void openPlayStoreLink(Context context, String appPackageName) {
+        try {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+        }
+    }
+    public static Intent getOpenPlayStoreIntent(Context context, String appPackageName) {
+        return new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName));
+    }
 }

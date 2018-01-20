@@ -17,7 +17,7 @@ import xyz.rimon.smr.events.OptInOutEvent;
  * Created by SAyEM on 11/12/17.
  */
 
-public class UIUtils {
+public class UIUtils extends xyz.rimon.ael.commons.utils.UIUtils{
     public static void showDialog(Context context, String title, String message) {
         if (title == null) title = "";
         new AlertDialog.Builder(context)

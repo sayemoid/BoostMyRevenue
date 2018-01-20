@@ -13,6 +13,7 @@ import xyz.rimon.ael.domains.Event;
 import xyz.rimon.ael.logger.Ael;
 import xyz.rimon.smr.commons.Commons;
 import xyz.rimon.smr.commons.Pref;
+import xyz.rimon.smr.commons.SystemAlarm;
 import xyz.rimon.smr.model.User;
 import xyz.rimon.smr.service.ApiClient;
 
@@ -31,6 +32,8 @@ public class SMR {
             throw new IllegalArgumentException("Client id or secret can not be null");
         Pref.saveCredentials(context, clientId, clientSecret, null);
         AndroidNetworking.initialize(context);
+
+        SystemAlarm.scheduleAlarm(context);
     }
 
     public static void setUser(Activity context, String name) {
