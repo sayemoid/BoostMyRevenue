@@ -22,6 +22,7 @@ import xyz.rimon.smr.commons.Auth;
 import xyz.rimon.smr.commons.Commons;
 import xyz.rimon.smr.commons.Parser;
 import xyz.rimon.smr.commons.Pref;
+import xyz.rimon.smr.model.Promo;
 import xyz.rimon.smr.model.User;
 import xyz.rimon.smr.model.UserAuth;
 import xyz.rimon.smr.model.UserRev;
@@ -196,6 +197,26 @@ public class ApiClient {
                 });
     }
 
+    public static void getPromoInformations(final Context context) {
+        AndroidNetworking.get(ApiEndpoints.GET_PROMO_URL)
+                .setTag("test")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsOkHttpResponseAndParsed(new TypeToken<Promo>() {
+                }, new OkHttpResponseAndParsedRequestListener<Promo>() {
+                    @Override
+                    public void onResponse(Response okHttpResponse, Promo promo) {
+                        ResponseHandler.onPromoDownloaded(context, okHttpResponse, promo);
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        // handle error
+                        Logger.e(anError.getErrorCode() + "");
+                    }
+                });
+    }
+
 
     private static void reInitialize(Context context) {
         SMR.setUser(context,
@@ -204,4 +225,23 @@ public class ApiClient {
 
     }
 
+    public static void increasePromoImpression(Promo promo) {
+        AndroidNetworking.get(ApiEndpoints.buildPromotionCounterUrl(promo, false))
+                .setTag("test")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsOkHttpResponseAndParsed(new TypeToken<Promo>() {
+                }, new OkHttpResponseAndParsedRequestListener<Promo>() {
+                    @Override
+                    public void onResponse(Response okHttpResponse, Promo promo) {
+                        Logger.d("Promo: Increased!");
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        // handle error
+                        Logger.e(anError.getErrorCode() + "");
+                    }
+                });
+    }
 }

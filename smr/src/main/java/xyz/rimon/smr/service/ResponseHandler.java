@@ -17,6 +17,7 @@ import xyz.rimon.smr.events.LoginEvent;
 import xyz.rimon.smr.events.PaymentRequestEvent;
 import xyz.rimon.smr.events.PostEventsEvent;
 import xyz.rimon.smr.events.RevenueLoadEvent;
+import xyz.rimon.smr.model.Promo;
 import xyz.rimon.smr.model.User;
 import xyz.rimon.smr.model.UserAuth;
 import xyz.rimon.smr.model.UserRev;
@@ -94,4 +95,13 @@ public class ResponseHandler {
         }
         Log.e("LOAD_REVENUE_CODE", String.valueOf(response.code()));
     }
+
+    public static void onPromoDownloaded(Context context, Response okHttpResponse, Promo promo) {
+        if (promo != null) {
+            ApiClient.increasePromoImpression(promo);
+            NotificationService.showNotification(context, promo.getTitle(), promo.getDescription(), ApiEndpoints.buildPromotionCounterUrl(promo, true));
+        }
+    }
+
+
 }
