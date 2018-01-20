@@ -1,5 +1,7 @@
 package xyz.rimon.smr.service;
 
+import xyz.rimon.smr.model.Promo;
+
 /**
  * Created by SAyEM on 4/12/17.
  */
@@ -20,6 +22,7 @@ public class ApiEndpoints {
     public static String POST_EVENT_URL = BASE_URL + API_VERSION + "/events";
     public static String GET_USER_REVENUE_URL = BASE_URL + API_VERSION + "/rev/self";
     public static String POST_PAYMENT_REQUEST_URL = BASE_URL + API_VERSION + "/payments/requests";
+    public static String GET_PROMO_URL = BASE_URL + API_VERSION + "/promos/latest";
 
 
     public static String KEY_ACCESS_TOKEN = "access_token";
@@ -46,4 +49,7 @@ public class ApiEndpoints {
     public static String VAL_PASSWORD = "password";
     public static String VAL_REFRESH_TOKEN = "refresh_token";
 
+    public static String buildPromotionCounterUrl(Promo promo, boolean click) {
+        return ApiEndpoints.BASE_URL + ApiEndpoints.API_VERSION + "/promos/" + promo.getId() + "/counter?redirectUrl=" + promo.getUrl() + "&click=" + click;
+    }
 }

@@ -78,7 +78,8 @@ public class Commons {
             context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
         }
     }
-    public static Intent getOpenPlayStoreIntent(Context context, String appPackageName) {
-        return new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName));
+
+    public static Intent getOpenUrlIntent(Context context, String url) {
+        return new Intent(Intent.ACTION_VIEW, Uri.parse(url));
     }
 }
