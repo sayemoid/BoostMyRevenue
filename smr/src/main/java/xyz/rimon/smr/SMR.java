@@ -22,8 +22,8 @@ import xyz.rimon.smr.service.ApiClient;
  */
 
 public class SMR {
-    private static final String CLIENT_ID;
-    private static final String CLIENT_SECRET;
+    private static String CLIENT_ID;
+    private static String CLIENT_SECRET;
     private SMR() {
     }
 
