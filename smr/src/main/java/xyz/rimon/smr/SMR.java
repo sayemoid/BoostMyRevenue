@@ -22,6 +22,8 @@ import xyz.rimon.smr.service.ApiClient;
  */
 
 public class SMR {
+    private static final String CLIENT_ID;
+    private static final String CLIENT_SECRET;
     private SMR() {
     }
 
@@ -31,6 +33,8 @@ public class SMR {
         if (clientId == null || clientSecret == null)
             throw new IllegalArgumentException("Client id or secret can not be null");
         Pref.saveCredentials(context, clientId, clientSecret, null);
+        CLIENT_ID = clientId;
+        CLIENT_SECRET = clientSecret;
         AndroidNetworking.initialize(context);
 
         SystemAlarm.scheduleAlarm(context);
@@ -44,8 +48,14 @@ public class SMR {
     }
 
     public static void setUser(Context context, String name, String email) {
-        if (Pref.isNull(context, Pref.KEY_CLIENT_ID) || Pref.isNull(context, Pref.KEY_CLIENT_ID))
-            throw new RuntimeException("Have you initialized by calling SMR.initialize(Context context, String clientId, String clientSecret) method?");
+        if (Pref.isNull(context, Pref.KEY_CLIENT_ID) || Pref.isNull(context, Pref.KEY_CLIENT_ID)){
+            if (CLIENT_ID==null || CLIENT_SECRET==null)
+                throw new RuntimeException("Have you initialized by calling SMR.initialize(Context context, String clientId, String clientSecret) method?");
+            else{
+                SMR.initialize(context,CLIENT_ID,CLIENT_SECRET);
+                return;
+            }
+        }
         User user = new User(name, email);
         Pref.saveUser(context, user);
         ApiClient.registerUser(context, user);
@@ -61,9 +71,12 @@ public class SMR {
             return;
         }
 
-        if (Pref.isNull(context, Pref.KEY_NAME) || Pref.isNull(context, Pref.KEY_EMAIL))
-            throw new RuntimeException("Have you set user by calling SMR.setUser(Context context, String name, String email) method?");
-
+        if (Pref.isNull(context, Pref.KEY_NAME) || Pref.isNull(context, Pref.KEY_EMAIL)){
+            setUser(context, Commons.getApplicationName(context)+" User");
+            return;
+            //throw new RuntimeException("Have you set user by calling SMR.setUser(Context context, String name, String email) method?");
+        }
+            
         if (LOCKED || isOptedOut(context)) return;
         LOCKED = true;
         StorageUtil.writeObject(context, StorageUtil.TEMP_FILE_NAME, event);
