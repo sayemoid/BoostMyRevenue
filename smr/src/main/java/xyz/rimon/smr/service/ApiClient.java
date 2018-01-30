@@ -148,7 +148,7 @@ public class ApiClient {
 
                     @Override
                     public void onError(ANError anError) {
-                        ResponseHandler.onError(anError);
+                        ResponseHandler.onError(context,anError);
                     }
                 });
     }

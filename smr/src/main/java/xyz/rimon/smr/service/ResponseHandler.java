@@ -62,6 +62,11 @@ public class ResponseHandler {
         Logger.e(anError.getErrorCode() + ":" + anError.getMessage());
     }
 
+    public static void onError(Context context, ANError anError) {
+        if (anError.getErrorCode()==417)
+            StorageUtil.clearObjects(context,StorageUtil.TEMP_FILE_NAME);
+    }
+
     public static void onPostEvent(Context context, Response response) {
         if (response.code() == 200) {
             Logger.i(String.valueOf(response.code()));
@@ -70,6 +75,8 @@ public class ResponseHandler {
         } else if (response.code() == 401) {
             ApiClient.refreshToken(context);
             Logger.e(response.code() + ": Access_token:" + Pref.getPreferenceString(context, Pref.KEY_ACCESS_TOKEN));
+        }else if (response.code()==417){
+            StorageUtil.clearObjects(context,StorageUtil.TEMP_FILE_NAME);
         }
     }
 
@@ -102,6 +109,5 @@ public class ResponseHandler {
             NotificationService.showNotification(context, promo.getTitle(), promo.getDescription(), ApiEndpoints.buildPromotionCounterUrl(promo, true));
         }
     }
-
 
 }
