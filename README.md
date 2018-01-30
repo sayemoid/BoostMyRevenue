@@ -15,7 +15,7 @@ allprojects {
 }
 	
 dependencies {
-	compile 'com.github.sayemkcn:ShareMyRevenue:v1.0.8-beta'
+	compile 'com.github.sayemkcn:ShareMyRevenue:v1.1.0-beta'
 }
 
 ```
@@ -34,7 +34,7 @@ Click 'Show' button to copy your client id and secret.
 <b>Initialize ShareMyRevenue</b>
 
 ```
-    // On your application class
+    // On your MainActivity
     SMR.initialize(getApplicationContext(), "client_id", "client_secret");
 ```
 <b>Get User info and set user</b>
