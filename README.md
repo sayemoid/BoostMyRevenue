@@ -87,6 +87,61 @@ Just add this view anywhere you want. That's it.
 
 Whoolala you're a sperstar now!!!
 But it's not all over yet, We've a dashboard for you on our [Website](http://www.sharemyrevenue.net) to manage your users, Share your revenues, resolving payment requests and so on!
+
+# Access your data anytime
+Base URL: 
+```
+https://api.sharemyrevenue.net
+```
+## Get access token
+Endpoint: ```/oauth/token```
+Params: 
+``` 
+grant_type:string (`password`,'refresh_token') ->required,
+client_id:string ->required,
+client_secret:string ->required,
+username:string ->required,
+password:string ->required
+```
+You'll get an access token and a refresh token here. Use this access_token to access your resources.
+## Events Api
+Endpoint: ```/api/v1/events```
+Params: 
+``` 
+page:integer,
+access_token:string ->required
+```
+## Payment Requests Api
+Endpoint: ```/api/v1/payments/requests/{client_id}```
+Params: 
+``` 
+page:integer,
+paid:boolean->required
+access_token:string ->required
+```
+## Users Api
+Endpoint: ```/api/v1/users```
+Params: 
+``` 
+page:integer,
+access_token:string ->required
+```
+## Earnings Api (For single user)
+Endpoint: ```/api/v1/users/{userid}/rev```
+Params: 
+``` 
+month:string->required (january,february...),
+year:string->required,
+access_token:string ->required
+```
+## Transactions Api (For single user)
+Endpoint: ```/api/v1/transactions/{userid}```
+Params: 
+``` 
+page:int
+access_token:string ->required
+```
+
 If you find any trouble integrating our api, Please contact me by [email](email@rimon.xyz) at any time. I'm looking forward to help you with my best efforts.
 
 God Bless you.
