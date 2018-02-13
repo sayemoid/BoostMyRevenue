@@ -95,7 +95,7 @@ https://api.sharemyrevenue.net
 ```
 ## Get access token
 Endpoint: ```/oauth/token```
-Params: 
+<br/>Params: 
 ``` 
 grant_type:string (`password`,'refresh_token') ->required,
 client_id:string ->required,
@@ -106,14 +106,14 @@ password:string ->required
 You'll get an access token and a refresh token here. Use this access_token to access your resources.
 ## Events Api
 Endpoint: ```/api/v1/events```
-Params: 
+<br/>Params: 
 ``` 
 page:integer,
 access_token:string ->required
 ```
 ## Payment Requests Api
 Endpoint: ```/api/v1/payments/requests/{client_id}```
-Params: 
+<br/>Params: 
 ``` 
 page:integer,
 paid:boolean->required
@@ -121,14 +121,14 @@ access_token:string ->required
 ```
 ## Users Api
 Endpoint: ```/api/v1/users```
-Params: 
+<br/>Params: 
 ``` 
 page:integer,
 access_token:string ->required
 ```
 ## Earnings Api (For single user)
 Endpoint: ```/api/v1/users/{userid}/rev```
-Params: 
+<br/>Params: 
 ``` 
 month:string->required (january,february...),
 year:string->required,
@@ -136,7 +136,7 @@ access_token:string ->required
 ```
 ## Transactions Api (For single user)
 Endpoint: ```/api/v1/transactions/{userid}```
-Params: 
+<br/>Params: 
 ``` 
 page:int
 access_token:string ->required
