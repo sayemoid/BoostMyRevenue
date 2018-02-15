@@ -1,10 +1,10 @@
-# [ShareMyRevenue](http://www.sharemyrevenue.net)
+# [BoostMyRevenue](http://www.boostmyrevenue.net)
 *Share a percentage of your revenue among your users, grow your company!* 
 *By simply logging their interactions.*
 
 *If you want to distribute your revenues/earnings among your users according to their interactions and usage of your app, then this api does just that for you.*
 
-<b> Add ShareMyRevenue to your project</b>
+<b> Add BoostMyRevenue to your project</b>
 
 ```
 allprojects {
@@ -25,13 +25,13 @@ dependencies {
 
 *You have to register our website to get client_id and client_secret for your app*
 
-[Register Here](http://www.sharemyrevenue.net)
+[Register Here](http://www.boostmyrevenue.net)
 
 Click 'Show' button to copy your client id and secret.
 
-![Alt text](https://i.imgur.com/apsUw6h.jpg "ShareMyRevenue")
+![Alt text](https://i.imgur.com/apsUw6h.jpg "BoostMyRevenue")
 
-<b>Initialize ShareMyRevenue</b>
+<b>Initialize BoostMyRevenue</b>
 
 ```
     // On your MainActivity
@@ -47,12 +47,17 @@ Click 'Show' button to copy your client id and secret.
 
 ```
 
-###Now you just have to log user interactions
+## Now you just have to log user interactions
+<b> Before logging user interactions, be sure to take storage permission from user. We use storage to provide offline logging capabilities. </b>
+```
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+```
+You may need [runtime permissions](https://developer.android.com/training/permissions/requesting.html#java) on android version higher than marshmallow.
 
 <b>Create Events</b>
 
 ```
-    EventFactory.getInstance().createEvent(Event.Type.USER_EVENT, "event_code", "event_tag", Event.Weight.NORMAL):
+    EventFactory.getInstance().createEvent(Event.Type.USER_EVENT, "event_code", "event_tag", Event.Weight.NORMAL); // returns an event instance too.
 ```
 
 You can create as much events as you want for future use. All of the events will be registered to <b>EventRegistry</b>.
@@ -106,6 +111,7 @@ password:string ->required
 You'll get an access token and a refresh token here. Use this access_token to access your resources.
 ## Events Api
 Endpoint: ```/api/v1/events```
+<br/>Method: GET,
 <br/>Params: 
 ``` 
 page:integer,
@@ -113,6 +119,7 @@ access_token:string ->required
 ```
 ## Payment Requests Api
 Endpoint: ```/api/v1/payments/requests/{client_id}```
+<br/>Method: GET,
 <br/>Params: 
 ``` 
 page:integer,
@@ -120,7 +127,8 @@ paid:boolean->required
 access_token:string ->required
 ```
 ## Users Api
-Endpoint: ```/api/v1/users```
+Endpoint: ```/api/v1/users``
+<br/>Method: GET,`
 <br/>Params: 
 ``` 
 page:integer,
@@ -128,6 +136,7 @@ access_token:string ->required
 ```
 ## Earnings Api (For single user)
 Endpoint: ```/api/v1/users/{userid}/rev```
+<br/>Method: GET,
 <br/>Params: 
 ``` 
 month:string->required (january,february...),
@@ -136,6 +145,7 @@ access_token:string ->required
 ```
 ## Transactions Api (For single user)
 Endpoint: ```/api/v1/transactions/{userid}```
+<br/>Method: GET,
 <br/>Params: 
 ``` 
 page:int
