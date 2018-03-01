@@ -3,12 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="15dp"
     android:orientation="vertical"
     android:weightSum="7"
     tools:context="xyz.rimon.sharemyrevenue.MainActivity">
 
     <xyz.rimon.smr.views.MyRevenueView
+        app:backgroundColor="#797979"
+        app:boxBackgroundColor="#676767"
+        app:textColor="@android:color/white"
+        app:title="Your App Name"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

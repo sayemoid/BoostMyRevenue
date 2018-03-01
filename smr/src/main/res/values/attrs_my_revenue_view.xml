@@ -1,8 +1,8 @@
 <resources>
     <declare-styleable name="MyRevenueView">
-        <attr name="exampleString" format="string" />
-        <attr name="exampleDimension" format="dimension" />
-        <attr name="exampleColor" format="color" />
-        <attr name="exampleDrawable" format="color|reference" />
+        <attr name="backgroundColor" format="color"/>
+        <attr name="boxBackgroundColor" format="color"/>
+        <attr name="title" format="string"/>
+        <attr name="textColor" format="color"/>
     </declare-styleable>
 </resources>

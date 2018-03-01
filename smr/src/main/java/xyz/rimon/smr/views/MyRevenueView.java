@@ -1,7 +1,9 @@
 package xyz.rimon.smr.views;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,6 +59,17 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener 
     private ImageView smrLogo;
     private TextView smrTitle;
 
+    private CardView cardContainer;
+    private TextView txtCmPoints;
+    private TextView txtCurrentBalance;
+    private TextView txtLastPayment;
+    private TextView txtLmBalance;
+
+    private int backgroundColor;
+    private int boxBackgroundColor;
+    private String title;
+    private int textColor;
+
     public MyRevenueView(Context context) {
         super(context);
         this.initView();
@@ -64,6 +77,19 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener 
 
     public MyRevenueView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+
+
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MyRevenueView, 0, 0);
+        try {
+            backgroundColor = ta.getColor(R.styleable.MyRevenueView_backgroundColor, getResources().getColor(R.color.background_color));
+            boxBackgroundColor = ta.getColor(R.styleable.MyRevenueView_boxBackgroundColor, getResources().getColor(R.color.background_color));
+            title = ta.getString(R.styleable.MyRevenueView_title);
+            textColor = ta.getColor(R.styleable.MyRevenueView_textColor, getResources().getColor(android.R.color.white));
+        } finally {
+            ta.recycle();
+        }
+
+
         this.initView();
     }
 
@@ -88,6 +114,32 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener 
         this.btnOptInOut = this.findViewById(R.id.btnOptInOut);
         this.smrLogo = this.findViewById(R.id.smrLogo);
         this.smrTitle = this.findViewById(R.id.smrTitle);
+
+        this.cardContainer = this.findViewById(R.id.cardContainer);
+        this.txtCmPoints = this.findViewById(R.id.txtCmPoints);
+        this.txtCurrentBalance = this.findViewById(R.id.txtCurrBalance);
+        this.txtLastPayment = this.findViewById(R.id.txtLastPayment);
+        this.txtLmBalance = this.findViewById(R.id.txtLmBalance);
+        // set custom attr values
+        this.cardContainer.setCardBackgroundColor(this.backgroundColor);
+        this.cmInterationPoints.setBackgroundColor(this.boxBackgroundColor);
+        this.cmIncome.setBackgroundColor(this.boxBackgroundColor);
+        this.lastPaymentAmount.setBackgroundColor(this.boxBackgroundColor);
+        this.pmIncome.setBackgroundColor(this.boxBackgroundColor);
+
+        if (this.title == null) this.title = getResources().getString(R.string.viewTitle);
+        this.smrTitle.setText(this.title);
+
+        this.smrTitle.setTextColor(this.textColor);
+        this.txtCmPoints.setTextColor(this.textColor);
+        this.txtCurrentBalance.setTextColor(this.textColor);
+        this.txtLastPayment.setTextColor(this.textColor);
+        this.txtLmBalance.setTextColor(this.textColor);
+        this.cmInterationPoints.setTextColor(this.textColor);
+        this.cmIncome.setTextColor(this.textColor);
+        this.lastPaymentAmount.setTextColor(this.textColor);
+        this.pmIncome.setTextColor(this.textColor);
+
 
         this.btnSendRequest.setOnClickListener(this);
         this.btnOptInOut.setOnClickListener(this);
@@ -167,7 +219,7 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener 
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.btnSendRequest) {
-            if (!Validator.isValidRequestInformations(getContext(), this.etPaymentMethod, this.etAccountNumber, this.etAmount,this.etNote))
+            if (!Validator.isValidRequestInformations(getContext(), this.etPaymentMethod, this.etAccountNumber, this.etAmount, this.etNote))
                 return;
             ApiClient.sendPaymentRequest(getContext(),
                     this.etPaymentMethod.getText().toString(),

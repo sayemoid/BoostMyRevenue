@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">smr</string>
 
+    <string name="viewTitle">BoostMyRevenue</string>
     <string-array name="paymentMethods">
         <item>Select Payment Method</item>
         <item>BKash</item>
