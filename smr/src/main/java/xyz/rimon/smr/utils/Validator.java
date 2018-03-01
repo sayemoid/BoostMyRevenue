@@ -36,14 +36,20 @@ public class Validator {
     }
 
     public static boolean isEmailValid(String emailStr) {
-        if (emailStr==null) return false;
+        if (emailStr == null) return false;
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
         return matcher.find();
     }
 
-    public static boolean isValidRequestInformations(Context context, TextView etPaymentMethod, EditText etAccountNumber, EditText etAmount) {
-        if (etPaymentMethod == null || etAccountNumber == null || etAmount == null) return false;
-        if (TextUtils.isEmpty(etPaymentMethod.getText()) || etPaymentMethod.getText().toString().length()<3){
+    public static boolean isValidRequestInformations(Context context, TextView etPaymentMethod, EditText etAccountNumber, EditText etAmount, EditText etNote) {
+        if (etPaymentMethod == null || etAccountNumber == null || etAmount == null || etNote == null)
+            return false;
+
+        if (TextUtils.isEmpty(etNote.getText())) {
+            etNote.setError("Please write some note to the payers so that they can use that information when transferring your earnings!");
+            return false;
+        }
+        if (TextUtils.isEmpty(etPaymentMethod.getText()) || etPaymentMethod.getText().toString().length() < 3) {
             etPaymentMethod.setError("Length must be greater than 3");
             return false;
         }

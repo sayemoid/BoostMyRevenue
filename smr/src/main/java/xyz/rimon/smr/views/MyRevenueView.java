@@ -50,6 +50,7 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener 
     private EditText etPaymentMethod;
     private EditText etAccountNumber;
     private EditText etAmount;
+    private EditText etNote;
     private Button btnSendRequest;
     private TextView btnOptInOut;
 
@@ -79,9 +80,9 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener 
         this.actualNumbersLayout = this.findViewById(R.id.actualNumbersLayout);
         this.tvRequestPaymentToggle = this.findViewById(R.id.tvRequestPaymentToggle);
         this.tvRequestPaymentToggle.setOnClickListener(this);
-        String[] paymentMethods = getContext().getResources().getStringArray(R.array.paymentMethods);
         this.etPaymentMethod = this.findViewById(R.id.etPaymentMethod);
         this.etAccountNumber = this.findViewById(R.id.etAccountNumber);
+        this.etNote = this.findViewById(R.id.etNote);
         this.etAmount = this.findViewById(R.id.etAmount);
         this.btnSendRequest = this.findViewById(R.id.btnSendRequest);
         this.btnOptInOut = this.findViewById(R.id.btnOptInOut);
@@ -166,9 +167,13 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener 
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.btnSendRequest) {
-            if (!Validator.isValidRequestInformations(getContext(), this.etPaymentMethod, this.etAccountNumber, this.etAmount))
+            if (!Validator.isValidRequestInformations(getContext(), this.etPaymentMethod, this.etAccountNumber, this.etAmount,this.etNote))
                 return;
-            ApiClient.sendPaymentRequest(getContext(), this.etPaymentMethod.getText().toString(), this.etAccountNumber.getText().toString(), this.etAmount.getText().toString());
+            ApiClient.sendPaymentRequest(getContext(),
+                    this.etPaymentMethod.getText().toString(),
+                    this.etAccountNumber.getText().toString(),
+                    this.etAmount.getText().toString(),
+                    this.etNote.getText().toString());
         } else if (id == R.id.tvRequestPaymentToggle) {
             this.toggleRequestFormVisibility();
         } else if (id == R.id.btnOptInOut) {
@@ -218,6 +223,9 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener 
         if (this.etAccountNumber.getVisibility() == View.GONE)
             this.etAccountNumber.setVisibility(View.VISIBLE);
         else this.etAccountNumber.setVisibility(View.GONE);
+        if (this.etNote.getVisibility() == View.GONE)
+            this.etNote.setVisibility(View.VISIBLE);
+        else this.etNote.setVisibility(View.GONE);
         if (this.btnSendRequest.getVisibility() == View.GONE)
             this.btnSendRequest.setVisibility(View.VISIBLE);
         else this.btnSendRequest.setVisibility(View.GONE);

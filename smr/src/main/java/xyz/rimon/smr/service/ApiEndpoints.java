@@ -44,6 +44,7 @@ public class ApiEndpoints {
     public static String KEY_PAYMENT_METHOD = "paymentMethod";
     public static String KEY_ACCOUNT_NUMBER= "accountNumber";
     public static String KEY_REQUEST_AMOUNT = "requestAmount";
+    public static String KEY_NOTE = "note";
 
 
     public static String VAL_PASSWORD = "password";
