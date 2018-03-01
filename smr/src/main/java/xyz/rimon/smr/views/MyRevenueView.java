@@ -5,13 +5,10 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -40,7 +37,7 @@ import xyz.rimon.smr.utils.Validator;
 /**
  * TODO: document your custom view class.
  */
-public class MyRevenueView extends LinearLayout implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class MyRevenueView extends LinearLayout implements View.OnClickListener {
 
     private TextView cmInterationPoints;
     private TextView cmIncome;
@@ -50,8 +47,7 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
     private View paymentView;
     private View actualNumbersLayout;
     private TextView tvRequestPaymentToggle;
-    private Spinner spnPaymentMethod;
-    private String paymentMethod;
+    private EditText etPaymentMethod;
     private EditText etAccountNumber;
     private EditText etAmount;
     private Button btnSendRequest;
@@ -84,10 +80,7 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
         this.tvRequestPaymentToggle = this.findViewById(R.id.tvRequestPaymentToggle);
         this.tvRequestPaymentToggle.setOnClickListener(this);
         String[] paymentMethods = getContext().getResources().getStringArray(R.array.paymentMethods);
-        ArrayAdapter<String> spnAdapter = new ArrayAdapter<>(getContext(), R.layout.spinner_item, paymentMethods);
-        this.spnPaymentMethod = this.findViewById(R.id.spnPaymentMethod);
-        this.spnPaymentMethod.setOnItemSelectedListener(this);
-        this.spnPaymentMethod.setAdapter(spnAdapter);
+        this.etPaymentMethod = this.findViewById(R.id.etPaymentMethod);
         this.etAccountNumber = this.findViewById(R.id.etAccountNumber);
         this.etAmount = this.findViewById(R.id.etAmount);
         this.btnSendRequest = this.findViewById(R.id.btnSendRequest);
@@ -173,9 +166,9 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.btnSendRequest) {
-            if (!Validator.isValidRequestInformations(getContext(), this.spnPaymentMethod, this.etAccountNumber, this.etAmount))
+            if (!Validator.isValidRequestInformations(getContext(), this.etPaymentMethod, this.etAccountNumber, this.etAmount))
                 return;
-            ApiClient.sendPaymentRequest(getContext(), this.paymentMethod, this.etAccountNumber.getText().toString(), this.etAmount.getText().toString());
+            ApiClient.sendPaymentRequest(getContext(), this.etPaymentMethod.getText().toString(), this.etAccountNumber.getText().toString(), this.etAmount.getText().toString());
         } else if (id == R.id.tvRequestPaymentToggle) {
             this.toggleRequestFormVisibility();
         } else if (id == R.id.btnOptInOut) {
@@ -214,29 +207,11 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener,
         }
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        if (position == 0) {
-            this.btnSendRequest.setEnabled(false);
-            this.btnSendRequest.setText("Please select a payment method");
-            this.btnSendRequest.setTextColor(getResources().getColor(android.R.color.holo_red_light));
-        } else {
-            this.btnSendRequest.setEnabled(true);
-            this.btnSendRequest.setText("Send Request");
-            this.btnSendRequest.setTextColor(getResources().getColor(android.R.color.holo_green_light));
-        }
-        this.paymentMethod = getResources().getStringArray(R.array.paymentMethods)[position];
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
 
     private void toggleRequestFormVisibility() {
-        if (this.spnPaymentMethod.getVisibility() == View.GONE)
-            this.spnPaymentMethod.setVisibility(View.VISIBLE);
-        else this.spnPaymentMethod.setVisibility(View.GONE);
+        if (this.etPaymentMethod.getVisibility() == View.GONE)
+            this.etPaymentMethod.setVisibility(View.VISIBLE);
+        else this.etPaymentMethod.setVisibility(View.GONE);
         if (this.etAmount.getVisibility() == View.GONE)
             this.etAmount.setVisibility(View.VISIBLE);
         else this.etAmount.setVisibility(View.GONE);

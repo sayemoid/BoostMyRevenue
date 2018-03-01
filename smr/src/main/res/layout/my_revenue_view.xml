@@ -179,7 +179,7 @@
         android:id="@+id/paymentView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         app:cardBackgroundColor="@color/cardview_dark_background">
 
         <LinearLayout
@@ -199,12 +199,15 @@
                 android:textColor="@android:color/holo_red_dark"
                 android:textSize="15dp" />
 
-            <Spinner
-                android:id="@+id/spnPaymentMethod"
+            <EditText
+                android:id="@+id/etPaymentMethod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/boder"
-                android:entries="@array/paymentMethods"
+                android:gravity="center"
+                android:hint="Payment Method"
+                android:inputType="text"
+                android:padding="5dp"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white"
                 android:visibility="gone" />

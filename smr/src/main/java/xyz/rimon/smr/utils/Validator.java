@@ -1,8 +1,9 @@
 package xyz.rimon.smr.utils;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,8 +41,12 @@ public class Validator {
         return matcher.find();
     }
 
-    public static boolean isValidRequestInformations(Context context, Spinner spnPaymentMethod, EditText etAccountNumber, EditText etAmount) {
-        if (spnPaymentMethod == null || etAccountNumber == null || etAmount == null) return false;
+    public static boolean isValidRequestInformations(Context context, TextView etPaymentMethod, EditText etAccountNumber, EditText etAmount) {
+        if (etPaymentMethod == null || etAccountNumber == null || etAmount == null) return false;
+        if (TextUtils.isEmpty(etPaymentMethod.getText()) || etPaymentMethod.getText().toString().length()<3){
+            etPaymentMethod.setError("Length must be greater than 3");
+            return false;
+        }
         if (etAccountNumber.getText().toString().isEmpty() || etAccountNumber.getText().toString().length() < 11) {
             etAccountNumber.setError("Invalid account number!");
             return false;

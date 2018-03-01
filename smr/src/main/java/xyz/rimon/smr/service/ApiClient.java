@@ -187,11 +187,13 @@ public class ApiClient {
                 .getAsOkHttpResponse(new OkHttpResponseListener() {
                     @Override
                     public void onResponse(Response response) {
+                        Logger.i(response.request().url().toString());
                         ResponseHandler.onPostPaymentRequest(context, response);
                     }
 
                     @Override
                     public void onError(ANError anError) {
+                        Logger.i(anError.getResponse().request().url().toString());
                         ResponseHandler.onError(anError);
                     }
                 });
