@@ -1,1 +1,1 @@
-include ':smr','app'
+include ':smr'
