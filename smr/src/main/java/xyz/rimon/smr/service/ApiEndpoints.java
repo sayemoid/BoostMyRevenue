@@ -10,11 +10,11 @@ public class ApiEndpoints {
     private ApiEndpoints() {
     }
 
-    public static String BASE_URL = "https://api.sharemyrevenue.net";
+    public static String BASE_URL = "https://api.boostmyrevenue.net";
 //    public static String BASE_URL = "http://192.168.0.102:8080";
     public static String API_VERSION = "/api/v1";
 
-    public static String HOME_URL = "https://www.sharemyrevenue.net";
+    public static String HOME_URL = "https://www.boostmyrevenue.net";
 
 
     public static String REGISTER_URL = BASE_URL + API_VERSION + "/users/create";

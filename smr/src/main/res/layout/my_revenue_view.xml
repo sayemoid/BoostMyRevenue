@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="ShareMyRevenue"
+                    android:text="BoostMyRevenue"
                     android:textColor="@android:color/white" />
 
                 <TextView
@@ -179,7 +179,7 @@
         android:id="@+id/paymentView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         app:cardBackgroundColor="@color/cardview_dark_background">
 
         <ScrollView
