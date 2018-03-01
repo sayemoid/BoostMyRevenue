@@ -6,8 +6,10 @@ import android.os.Handler;
 
 import com.androidnetworking.AndroidNetworking;
 
+import java.util.Collections;
 import java.util.List;
 
+import xyz.rimon.ael.commons.utils.PermissionUtil;
 import xyz.rimon.ael.commons.utils.StorageUtil;
 import xyz.rimon.ael.domains.Event;
 import xyz.rimon.ael.logger.Ael;
@@ -24,6 +26,7 @@ import xyz.rimon.smr.service.ApiClient;
 public class SMR {
     private static String CLIENT_ID;
     private static String CLIENT_SECRET;
+
     private SMR() {
     }
 
@@ -48,11 +51,11 @@ public class SMR {
     }
 
     public static void setUser(Context context, String name, String email) {
-        if (Pref.isNull(context, Pref.KEY_CLIENT_ID) || Pref.isNull(context, Pref.KEY_CLIENT_ID)){
-            if (CLIENT_ID==null || CLIENT_SECRET==null)
+        if (Pref.isNull(context, Pref.KEY_CLIENT_ID) || Pref.isNull(context, Pref.KEY_CLIENT_ID)) {
+            if (CLIENT_ID == null || CLIENT_SECRET == null)
                 throw new RuntimeException("Have you initialized by calling SMR.initialize(Context context, String clientId, String clientSecret) method?");
-            else{
-                SMR.initialize(context,CLIENT_ID,CLIENT_SECRET);
+            else {
+                SMR.initialize(context, CLIENT_ID, CLIENT_SECRET);
                 return;
             }
         }
@@ -65,25 +68,29 @@ public class SMR {
         Ael.logEvent(context, event);
     }
 
-    public static void logOnline(final Activity context, Event event) {
+    public static void logOnline(final Activity context, final Event event) {
         if (isUserSetButNotEmail(context)) {
             setUser(context, Pref.getPreferenceString(context, Pref.KEY_NAME));
             return;
         }
 
-        if (Pref.isNull(context, Pref.KEY_NAME) || Pref.isNull(context, Pref.KEY_EMAIL)){
-            setUser(context, Commons.getApplicationName(context)+" User");
+        if (Pref.isNull(context, Pref.KEY_NAME) || Pref.isNull(context, Pref.KEY_EMAIL)) {
+            setUser(context, Commons.getApplicationName(context) + " User");
             return;
             //throw new RuntimeException("Have you set user by calling SMR.setUser(Context context, String name, String email) method?");
         }
-            
+
         if (LOCKED || isOptedOut(context)) return;
         LOCKED = true;
         StorageUtil.writeObject(context, StorageUtil.TEMP_FILE_NAME, event);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                List<Event> eventList = StorageUtil.readObjects(context, StorageUtil.TEMP_FILE_NAME);
+                List<Event> eventList;
+                if (hasStoragePermission(context))
+                    eventList = StorageUtil.readObjects(context, StorageUtil.TEMP_FILE_NAME);
+                else
+                    eventList = Collections.singletonList(event);
                 ApiClient.postEvent(context, eventList);
                 LOCKED = false;
             }
@@ -96,6 +103,10 @@ public class SMR {
 
     private static boolean isUserSetButNotEmail(Context context) {
         return Pref.isNull(context, Pref.KEY_EMAIL) && !Pref.isNull(context, Pref.KEY_NAME);
+    }
+
+    private static boolean hasStoragePermission(Context context) {
+        return PermissionUtil.hasPermission(context, "android.permission.WRITE_EXTERNAL_STORAGE");
     }
 
 }
