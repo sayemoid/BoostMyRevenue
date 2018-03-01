@@ -4,6 +4,9 @@
 
 *If you want to distribute your revenues/earnings among your users according to their interactions and usage of your app, then this api does just that for you.*
 
+
+**You can find a test implementation project [here](https://github.com/sayemkcn/bmr-test)***
+
 <b> Add BoostMyRevenue to your project</b>
 
 ```
