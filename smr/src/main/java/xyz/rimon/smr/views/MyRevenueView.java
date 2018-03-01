@@ -82,7 +82,7 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MyRevenueView, 0, 0);
         try {
             backgroundColor = ta.getColor(R.styleable.MyRevenueView_backgroundColor, getResources().getColor(R.color.background_color));
-            boxBackgroundColor = ta.getColor(R.styleable.MyRevenueView_boxBackgroundColor, getResources().getColor(R.color.background_color));
+            boxBackgroundColor = ta.getColor(R.styleable.MyRevenueView_boxBackgroundColor, getResources().getColor(R.color.box_background_color));
             title = ta.getString(R.styleable.MyRevenueView_title);
             textColor = ta.getColor(R.styleable.MyRevenueView_textColor, getResources().getColor(android.R.color.white));
         } finally {
