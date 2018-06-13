@@ -239,8 +239,8 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener 
         if (!isConfirmationDialogShown()) {
             UIUtils.showConfimationDialog(
                     getContext(),
-                    "Sign up for ShareMyRevenue programme",
-                    "ShareMyRevenue is a revenue sharing programme for the developers/companies to share a percentage of their revenue among their users. That means you'll get paid by using this app according to your interactions.\n\n" +
+                    "Sign up for BoostMyRevenue programme",
+                    "BoostMyRevenue is a revenue sharing programme for the developers/companies to share a percentage of their revenue among their users. That means you'll get paid by using this app according to your interactions.\n\n" +
                             "What you\'ll be able to do by signing up?\n\n" +
                             "-> Earn interaction points when you use the app.\n" +
                             "-> Those points will be converted to money every months.\n" +

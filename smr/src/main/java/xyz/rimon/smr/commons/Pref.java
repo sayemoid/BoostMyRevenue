@@ -20,12 +20,13 @@ public class Pref {
     public static final String KEY_ACCESS_TOKEN = "jd8ehrukd746e84rn";
     public static final String KEY_REFRESH_TOKEN = "bfic8r7wcyrheudr874";
     public static final String KEY_NAME = "jfiuekwhld8487h";
-//    public static final String KEY_PASSWORD = "fjkhui3y4dqjk32io";
+
     public static final String KEY_USERNAME = "jr6843ge38fwyhjwu";
     public static final String KEY_EMAIL = "kfjwduyri2uew897435";
 
     public static final String USER_OPT_IN = "ds564f6435252fr6gy";
-//    public static final String PREF_ACCOUNT_ID = "fb_account_kit_id";
+    public static final String KEY_FIREBASE_TOKEN = "dfr5432ff6435252fr6gy";
+
 
     public static void savePreference(Context context, String key, boolean value) {
         SharedPreferences sharedPref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
