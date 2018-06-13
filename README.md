@@ -18,7 +18,7 @@ allprojects {
 }
 	
 dependencies {
-    compile 'com.github.sayemkcn:BoostMyRevenue:v1.3.0-beta'
+    compile 'com.github.sayemkcn:BoostMyRevenue:v1.4'
 }
 
 ```
