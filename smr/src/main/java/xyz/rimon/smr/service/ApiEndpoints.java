@@ -23,6 +23,7 @@ public class ApiEndpoints {
     public static String GET_USER_REVENUE_URL = BASE_URL + API_VERSION + "/rev/self";
     public static String POST_PAYMENT_REQUEST_URL = BASE_URL + API_VERSION + "/payments/requests";
     public static String GET_PROMO_URL = BASE_URL + API_VERSION + "/promos/latest";
+    public static String POST_FIREBASE_USER_TOKEN = BASE_URL + API_VERSION + "/firebase/token";
 
 
     public static String KEY_ACCESS_TOKEN = "access_token";
@@ -45,6 +46,7 @@ public class ApiEndpoints {
     public static String KEY_ACCOUNT_NUMBER= "accountNumber";
     public static String KEY_REQUEST_AMOUNT = "requestAmount";
     public static String KEY_NOTE = "note";
+    public static String KEY_TOKEN = "token";
 
 
     public static String VAL_PASSWORD = "password";

@@ -13,7 +13,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        SMR.initialize(getApplicationContext(), "c1pdmokem15sdncvu1m0ovivsv", "6baoeb9cqgrv8eug5353njrtc2");
+        SMR.initialize(getApplicationContext(), "snbob56dlcvmf21ci197stfr1u", "d4r3m9tfv4gqe7u6d8sn2ncb5d");
 
     }
 }

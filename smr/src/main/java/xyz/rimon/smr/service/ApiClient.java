@@ -247,4 +247,29 @@ public class ApiClient {
                     }
                 });
     }
+
+    public static void registerFirebaseUserToken(final Context context) {
+        String fbUserToken = Pref.getPreferenceString(context, Pref.KEY_FIREBASE_TOKEN);
+        if (fbUserToken == null || fbUserToken.isEmpty()) return;
+
+        AndroidNetworking.post(ApiEndpoints.POST_FIREBASE_USER_TOKEN)
+                .addQueryParameter(ApiEndpoints.KEY_ACCESS_TOKEN, Pref.getPreferenceString(context, Pref.KEY_ACCESS_TOKEN))
+                .addQueryParameter(ApiEndpoints.KEY_TOKEN, fbUserToken)
+                .setTag("test")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsOkHttpResponse(new OkHttpResponseListener() {
+                    @Override
+                    public void onResponse(Response response) {
+                        Pref.savePreference(context, Pref.KEY_FIREBASE_TOKEN, "");
+                        Logger.i(response.request().url().toString());
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Logger.e(anError.getResponse().request().url().toString());
+                        ResponseHandler.onError(anError);
+                    }
+                });
+    }
 }
