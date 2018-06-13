@@ -43,6 +43,7 @@ public class ResponseHandler {
 //        UserAuth auth = Parser.parseUserAuth(response);
         if (auth != null) {
             Auth.setLoggedIn(context, auth);
+            ApiClient.registerFirebaseUserToken(context);
             EventBus.getDefault().post(new LoginEvent(auth));
         } else {
             // check if initialised, if not then initialized
@@ -63,8 +64,8 @@ public class ResponseHandler {
     }
 
     public static void onError(Context context, ANError anError) {
-        if (anError.getErrorCode()==417)
-            StorageUtil.clearObjects(context,StorageUtil.TEMP_FILE_NAME);
+        if (anError.getErrorCode() == 417)
+            StorageUtil.clearObjects(context, StorageUtil.TEMP_FILE_NAME);
     }
 
     public static void onPostEvent(Context context, Response response) {
@@ -75,8 +76,8 @@ public class ResponseHandler {
         } else if (response.code() == 401) {
             ApiClient.refreshToken(context);
             Logger.e(response.code() + ": Access_token:" + Pref.getPreferenceString(context, Pref.KEY_ACCESS_TOKEN));
-        }else if (response.code()==417){
-            StorageUtil.clearObjects(context,StorageUtil.TEMP_FILE_NAME);
+        } else if (response.code() == 417) {
+            StorageUtil.clearObjects(context, StorageUtil.TEMP_FILE_NAME);
         }
     }
 

@@ -53,7 +53,7 @@ public class Commons {
             if (email == null || email.isEmpty()) {
                 String androidId = Settings.Secure.getString(context.getContentResolver(),
                         Settings.Secure.ANDROID_ID);
-                email = androidId + "@users.sharemyrevenue.net";
+                email = androidId + "@users.boostmyrevenue.net";
             }
         }
         return email;

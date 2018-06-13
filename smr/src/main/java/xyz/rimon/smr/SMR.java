@@ -109,4 +109,7 @@ public class SMR {
         return PermissionUtil.hasPermission(context, "android.permission.WRITE_EXTERNAL_STORAGE");
     }
 
+    public static void dispatchFirebaseUserToken(Context context, String token) {
+        Pref.savePreference(context, Pref.KEY_FIREBASE_TOKEN, token);
+    }
 }
