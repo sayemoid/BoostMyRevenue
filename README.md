@@ -5,7 +5,8 @@
 *If you want to distribute your revenues/earnings among your users according to their interactions and usage of your app, then this api does just that for you.*
 
 
-**You can find a test implementation project [here](https://github.com/sayemkcn/bmr-test)***
+***You can find a test implementation project [here](https://github.com/sayemkcn/bmr-test)*** <br/>
+***For push notification tutorial [click here](https://github.com/sayemkcn/BoostMyRevenue/blob/master/firebasecm.md)***
 
 <b> Add BoostMyRevenue to your project</b>
 
@@ -135,7 +136,7 @@ paid:boolean->required
 access_token:string ->required
 ```
 ## Users Api
-Endpoint: ```/api/v1/users``
+Endpoint: ```/api/v1/users```
 <br/>Method: GET,`
 <br/>Params: 
 ``` 
