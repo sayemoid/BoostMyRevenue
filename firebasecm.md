@@ -32,7 +32,7 @@ String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 <img src="https://i.imgur.com/KxYta9F.png" style="width:100%; height:auto;"/>
 
 
-<b>Now you can send a push notification from your admin panel:</b>
+### Now you can send a push notification from your admin panel:
 
 <img src="https://i.imgur.com/ULylq93.png" style="width:100%; height:auto;"/>
 
@@ -40,7 +40,7 @@ String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
 <img src="https://i.imgur.com/IlsXyZu.png" style="width:100%; height:auto;"/>
 
-### On on specific topic:
+### On specific topic:
 In this case you'll have to subscribe your user to a specific topic on your app by using a firebase method.
 ```
 FirebaseMessaging.getInstance().subscribeToTopic("all")
@@ -69,7 +69,7 @@ If you want to send a push programatically from your own server or trigger it fr
 
 To send a push you must get an access token. See [this documentation](https://docs.boostmyrevenue.net) for the access token api.
 
-Endpoint: api.boostmyrevenue.net/api/v1/firebase/notify/{userId}
+Endpoint: api.boostmyrevenue.net/api/v1/firebase/notify/{userId} POST
 Params:
 Path Param:
 ```
