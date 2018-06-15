@@ -8,6 +8,8 @@ At first you need to implement firebase cloud messaging on your application. Fol
 
 ### 2. Implement BoostMyRevenue sdk
 
+#### *( Please make sure to update your dependency to our [latest sdk version](https://docs.boostmyrevenue.net) )*
+
 if you haven't implemented BoostMyRevenue sdk on your application, you can follow this [documentation](https://firebase.google.com/docs/cloud-messaging/android/client) to implement it on your application. You can skip implementing event logging if you want. But in this case you need to at least initialize firebase sdk.
 
 ### 3. Register your users firebase refresh token
@@ -59,7 +61,7 @@ FirebaseMessaging.getInstance().subscribeToTopic("all")
 
 <img src="https://i.imgur.com/gC6lDiT.png" style="width:100%; height:auto;"/>
 
-We'e subscribed a topic 'all' on the above example. So in this case we've to provide topic name on the topic name field to send notifications to all users who subscribe to that topic. You can surely subscribe to multiple topics if you want.
+We've subscribed to a topic 'all' on the above example. So in this case we've to provide topic name on the topic name field to send notifications to all users who subscribe to that topic. You can surely subscribe to multiple topics if you want.
 
 <img src="https://i.imgur.com/x8LvEmP.png" style="width:100%; height:auto;"/>
 
