@@ -71,8 +71,9 @@ If you want to send a push programatically from your own server or trigger it fr
 
 To send a push you must get an access token. See [this documentation](https://docs.boostmyrevenue.net) for the access token api.
 
-Endpoint: api.boostmyrevenue.net/api/v1/firebase/notify/{userId} POST
-Params:
+Endpoint: 
+```api.boostmyrevenue.net/api/v1/firebase/notify/{userId} POST```
+Params:<br/>
 Path Param:
 ```
 userId: Long (Get user id from [users api](https://docs.boostmyrevenue.net))
