@@ -4,6 +4,10 @@
 
 *If you want to distribute your revenues/earnings among your users according to their interactions and usage of your app, then this api does just that for you.*
 
+
+***You can find a test implementation project [here](https://github.com/sayemkcn/bmr-test)*** <br/>
+***For push notification tutorial [click here](https://github.com/sayemkcn/BoostMyRevenue/blob/master/firebasecm.md)***
+
 <b> Add BoostMyRevenue to your project</b>
 
 ```
@@ -15,7 +19,7 @@ allprojects {
 }
 	
 dependencies {
-	compile 'com.github.sayemkcn:ShareMyRevenue:v1.1.0-beta'
+    compile 'com.github.sayemkcn:BoostMyRevenue:v1.4'
 }
 
 ```
@@ -77,26 +81,31 @@ You can find any specific event by tag or event code. (You should always get eve
 
 ##<b>View for users to see earnings, send payment requests</b>
 
-<img src="https://i.imgur.com/QaoSe3z.png" width="500" /> <img src="https://i.imgur.com/mwRCOnN.png" width="500" />
+<img src="https://i.imgur.com/bDkdKp3.png" width="500" /> <img src="https://i.imgur.com/mwRCOnN.png" width="500" />
 <img src="https://i.imgur.com/ITN8z5a.png" width="500" />
 
 Just add this view anywhere you want. That's it.
 
 ```
-     <xyz.rimon.smr.views.MyRevenueView
+       <xyz.rimon.smr.views.MyRevenueView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+
+        app:backgroundColor="#797979"
+        app:boxBackgroundColor="#676767"
+        app:textColor="@android:color/white"
+        app:title="Your App Name" />
 ```
 
 
 
 Whoolala you're a sperstar now!!!
-But it's not all over yet, We've a dashboard for you on our [Website](http://www.sharemyrevenue.net) to manage your users, Share your revenues, resolving payment requests and so on!
+But it's not all over yet, We've a dashboard for you on our [Website](http://www.boostmyrevenue.net) to manage your users, Share your revenues, resolving payment requests and so on!
 
 # Access your data anytime
 Base URL: 
 ```
-https://api.sharemyrevenue.net
+https://api.boostmyrevenue.net
 ```
 ## Get access token
 Endpoint: ```/oauth/token```
@@ -127,7 +136,7 @@ paid:boolean->required
 access_token:string ->required
 ```
 ## Users Api
-Endpoint: ```/api/v1/users``
+Endpoint: ```/api/v1/users```
 <br/>Method: GET,`
 <br/>Params: 
 ``` 
