@@ -1,5 +1,6 @@
 package xyz.rimon.smr.service;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -29,7 +30,7 @@ import xyz.rimon.smr.utils.Logger;
 
 public class ResponseHandler {
 
-    public static void onUserRegistration(Context context, User user, Response response) {
+    public static void onUserRegistration(Activity context, User user, Response response) {
         if (response.code() == 200 || response.code() == 226) { // if user created of already exists
             Pref.savePreference(context, Pref.KEY_INITIALIZED, true);
             ApiClient.login(context);

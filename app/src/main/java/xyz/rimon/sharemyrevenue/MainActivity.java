@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SMR.setUser(this, "Test Name");
+        SMR.setUser(this, "Test Name","01710226163");
 
         Button initButton = this.findViewById(R.id.btnInitialize);
         initButton.setOnClickListener(new View.OnClickListener() {

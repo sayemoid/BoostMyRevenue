@@ -1,5 +1,6 @@
 package xyz.rimon.smr.service;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.androidnetworking.AndroidNetworking;
@@ -37,7 +38,7 @@ public class ApiClient {
     private ApiClient() {
     }
 
-    public static void registerUser(final Context context, final User user) {
+    public static void registerUser(final Activity context, final User user) {
         Validator.validateUser(user);
 
         AndroidNetworking.post(ApiEndpoints.REGISTER_URL)
@@ -66,7 +67,7 @@ public class ApiClient {
 
     }
 
-    public static void login(final Context context) {
+    public static void login(final Activity context) {
         if (!Pref.getPreference(context, Pref.KEY_INITIALIZED)) {
             reInitialize(context);
         }
@@ -119,7 +120,7 @@ public class ApiClient {
                 });
     }
 
-    public static void postEvent(final Context context, List<Event> eventList) {
+    public static void postEvent(final Activity context, List<Event> eventList) {
         if (!Auth.isLoggedIn(context)) {
             login(context);
             return;
@@ -153,7 +154,7 @@ public class ApiClient {
                 });
     }
 
-    public static void loadUserRevenue(final Context context, String month, String year) {
+    public static void loadUserRevenue(final Activity context, String month, String year) {
         AndroidNetworking.get(ApiEndpoints.GET_USER_REVENUE_URL)
                 .addQueryParameter(ApiEndpoints.KEY_ACCESS_TOKEN, Pref.getPreferenceString(context, Pref.KEY_ACCESS_TOKEN))
                 .addQueryParameter(ApiEndpoints.KEY_MONTH, month)
@@ -221,7 +222,7 @@ public class ApiClient {
     }
 
 
-    private static void reInitialize(Context context) {
+    private static void reInitialize(Activity context) {
         SMR.setUser(context,
                 Pref.getPreferenceString(context, Pref.KEY_NAME),
                 Pref.getPreferenceString(context, Pref.KEY_EMAIL));

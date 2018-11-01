@@ -50,7 +50,15 @@ public class SMR {
         setUser(context, name, email);
     }
 
-    public static void setUser(Context context, String name, String email) {
+
+    public static void setUser(Activity context, String name, String username) {
+        Pref.savePreference(context, Pref.KEY_NAME, name);
+        String email = Commons.getPrimaryEmailAddress(context);
+        if (email == null) return;
+        setUser(context, name, username, email);
+    }
+
+    public static void setUser(Activity context, String name, String username, String email) {
         if (Pref.isNull(context, Pref.KEY_CLIENT_ID) || Pref.isNull(context, Pref.KEY_CLIENT_ID)) {
             if (CLIENT_ID == null || CLIENT_SECRET == null)
                 throw new RuntimeException("Have you initialized by calling SMR.initialize(Context context, String clientId, String clientSecret) method?");
@@ -59,7 +67,7 @@ public class SMR {
                 return;
             }
         }
-        User user = new User(name, email);
+        User user = new User(name, username, email);
         Pref.saveUser(context, user);
         ApiClient.registerUser(context, user);
     }
