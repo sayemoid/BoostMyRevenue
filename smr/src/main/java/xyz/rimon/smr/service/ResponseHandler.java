@@ -11,7 +11,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 
 import okhttp3.Response;
-import xyz.rimon.ael.commons.utils.StorageUtil;
+import xyz.rimon.ael.logger.Ael;
 import xyz.rimon.smr.commons.Auth;
 import xyz.rimon.smr.commons.Pref;
 import xyz.rimon.smr.events.LoginEvent;
@@ -64,21 +64,21 @@ public class ResponseHandler {
         Logger.e(anError.getErrorCode() + ":" + anError.getMessage());
     }
 
-    public static void onError(Context context, ANError anError) {
+    public static void onError(Activity context, ANError anError) {
         if (anError.getErrorCode() == 417)
-            StorageUtil.clearObjects(context, StorageUtil.TEMP_FILE_NAME);
+            Ael.clearEvents(context);
     }
 
-    public static void onPostEvent(Context context, Response response) {
+    public static void onPostEvent(Activity context, Response response) {
         if (response.code() == 200) {
             Logger.i(String.valueOf(response.code()));
-            StorageUtil.clearObjects(context, StorageUtil.TEMP_FILE_NAME);
+            Ael.clearEvents(context);
             EventBus.getDefault().post(new PostEventsEvent(true));
         } else if (response.code() == 401) {
             ApiClient.refreshToken(context);
             Logger.e(response.code() + ": Access_token:" + Pref.getPreferenceString(context, Pref.KEY_ACCESS_TOKEN));
         } else if (response.code() == 417) {
-            StorageUtil.clearObjects(context, StorageUtil.TEMP_FILE_NAME);
+            Ael.clearEvents(context);
         }
     }
 

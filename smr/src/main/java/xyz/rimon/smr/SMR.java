@@ -6,11 +6,9 @@ import android.os.Handler;
 
 import com.androidnetworking.AndroidNetworking;
 
-import java.util.Collections;
 import java.util.List;
 
 import xyz.rimon.ael.commons.utils.PermissionUtil;
-import xyz.rimon.ael.commons.utils.StorageUtil;
 import xyz.rimon.ael.domains.Event;
 import xyz.rimon.ael.logger.Ael;
 import xyz.rimon.smr.commons.Commons;
@@ -90,19 +88,15 @@ public class SMR {
 
         if (LOCKED || isOptedOut(context)) return;
         LOCKED = true;
-        StorageUtil.writeObject(context, StorageUtil.TEMP_FILE_NAME, event);
+        Ael.logEvent(context,event);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                List<Event> eventList;
-                if (hasStoragePermission(context))
-                    eventList = StorageUtil.readObjects(context, StorageUtil.TEMP_FILE_NAME);
-                else
-                    eventList = Collections.singletonList(event);
+                List<Event> eventList=Ael.getEvents(context);
                 ApiClient.postEvent(context, eventList);
                 LOCKED = false;
             }
-        }, 10000);
+        }, 5000);
     }
 
     private static boolean isOptedOut(Context context) {
