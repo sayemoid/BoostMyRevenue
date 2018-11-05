@@ -45,7 +45,8 @@ public class SMR {
         Pref.savePreference(context, Pref.KEY_NAME, name);
         String email = Commons.getPrimaryEmailAddress(context);
         if (email == null) return;
-        setUser(context, name, email);
+        String username = Pref.getPreferenceString(context,Pref.KEY_USERNAME);
+        setUser(context, name, username,email);
     }
 
 
