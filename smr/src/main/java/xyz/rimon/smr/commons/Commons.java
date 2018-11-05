@@ -64,7 +64,7 @@ public class Commons {
     private static String buildTempEmail(Context context) {
         String androidId = Settings.Secure.getString(context.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        return androidId + "@users.boostmyrevenue.net";
+        return androidId + "@" + context.getPackageName() + ".boostmyrevenue.net";
     }
 
     public static String getApplicationName(Context context) {
