@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.ANRequest;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.OkHttpResponseAndParsedRequestListener;
@@ -41,7 +42,7 @@ public class ApiClient {
     public static void registerUser(final Activity context, final User user) {
         Validator.validateUser(user);
 
-        AndroidNetworking.post(ApiEndpoints.REGISTER_URL)
+        ANRequest.PostRequestBuilder builder = AndroidNetworking.post(ApiEndpoints.REGISTER_URL)
                 .addBodyParameter(ApiEndpoints.KEY_CLIENT_ID_CAMELCASE, Pref.getPreferenceString(context, Pref.KEY_CLIENT_ID))
                 .addBodyParameter(ApiEndpoints.KEY_CLIENT_SECRET_CAMELCASE, Pref.getPreferenceString(context, Pref.KEY_CLIENT_SECRET))
                 .addBodyParameter(ApiEndpoints.KEY_NAME, user.getName())
@@ -49,8 +50,8 @@ public class ApiClient {
                 .addBodyParameter(ApiEndpoints.KEY_USERNAME, Pref.getPreferenceString(context, Pref.KEY_USERNAME))
                 .addBodyParameter(ApiEndpoints.KEY_PASSOWRD, Pref.getPreferenceString(context, Pref.KEY_CLIENT_ID))
                 .addBodyParameter(ApiEndpoints.KEY_APP_NAME, Commons.getApplicationName(context))
-                .addBodyParameter(ApiEndpoints.KEY_APP_PACKAGE_NAME, context.getPackageName())
-                .setTag("test")
+                .addBodyParameter(ApiEndpoints.KEY_APP_PACKAGE_NAME, context.getPackageName());
+                builder.setTag("test")
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsOkHttpResponse(new OkHttpResponseListener() {
@@ -225,6 +226,7 @@ public class ApiClient {
     private static void reInitialize(Activity context) {
         SMR.setUser(context,
                 Pref.getPreferenceString(context, Pref.KEY_NAME),
+                Pref.getPreferenceString(context, Pref.KEY_USERNAME),
                 Pref.getPreferenceString(context, Pref.KEY_EMAIL));
 
     }
