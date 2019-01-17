@@ -14,6 +14,7 @@ import android.util.Patterns;
 import java.util.regex.Pattern;
 
 import xyz.rimon.ael.commons.utils.PermissionUtil;
+import xyz.rimon.smr.config.ApiConfig;
 import xyz.rimon.smr.utils.Validator;
 
 /**
@@ -36,6 +37,9 @@ public class Commons {
     }
 
     public static String getPrimaryEmailAddress(Activity context) {
+        // if it's necessary to skip contact permission
+        if (ApiConfig.SKIP_CONTACT_PERMISSION) return buildTempEmail(context);
+
         if (!PermissionUtil.hasPermission(context, Manifest.permission.GET_ACCOUNTS))
             PermissionUtil.askForPermission(context, Manifest.permission.GET_ACCOUNTS);
 
@@ -51,12 +55,16 @@ public class Commons {
         // if permission is granted but still couldn't find email then get device id and build email address
         if (PermissionUtil.hasPermission(context, Manifest.permission.GET_ACCOUNTS)) {
             if (email == null || email.isEmpty()) {
-                String androidId = Settings.Secure.getString(context.getContentResolver(),
-                        Settings.Secure.ANDROID_ID);
-                email = androidId + "@users.boostmyrevenue.net";
+                email = buildTempEmail(context);
             }
         }
         return email;
+    }
+
+    private static String buildTempEmail(Context context) {
+        String androidId = Settings.Secure.getString(context.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        return androidId + "@" + context.getPackageName() + ".boostmyrevenue.net";
     }
 
     public static String getApplicationName(Context context) {

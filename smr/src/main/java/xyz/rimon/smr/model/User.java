@@ -47,6 +47,12 @@ public class User {
         this.username = Commons.sliceUsername(email);
     }
 
+    public User(String name, String username, String email) {
+        this.name = name;
+        this.email = email;
+        this.username = username;
+    }
+
     public User(String name, String username, String email, String password) {
         this.name = name;
         this.username = username;

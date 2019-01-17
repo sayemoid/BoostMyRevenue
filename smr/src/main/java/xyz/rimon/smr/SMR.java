@@ -6,11 +6,9 @@ import android.os.Handler;
 
 import com.androidnetworking.AndroidNetworking;
 
-import java.util.Collections;
 import java.util.List;
 
 import xyz.rimon.ael.commons.utils.PermissionUtil;
-import xyz.rimon.ael.commons.utils.StorageUtil;
 import xyz.rimon.ael.domains.Event;
 import xyz.rimon.ael.logger.Ael;
 import xyz.rimon.smr.commons.Commons;
@@ -47,10 +45,19 @@ public class SMR {
         Pref.savePreference(context, Pref.KEY_NAME, name);
         String email = Commons.getPrimaryEmailAddress(context);
         if (email == null) return;
-        setUser(context, name, email);
+        String username = Pref.getPreferenceString(context,Pref.KEY_USERNAME);
+        setUser(context, name, username,email);
     }
 
-    public static void setUser(Context context, String name, String email) {
+
+    public static void setUser(Activity context, String name, String username) {
+        Pref.savePreference(context, Pref.KEY_NAME, name);
+        String email = Commons.getPrimaryEmailAddress(context);
+        if (email == null) return;
+        setUser(context, name, username, email);
+    }
+
+    public static void setUser(Activity context, String name, String username, String email) {
         if (Pref.isNull(context, Pref.KEY_CLIENT_ID) || Pref.isNull(context, Pref.KEY_CLIENT_ID)) {
             if (CLIENT_ID == null || CLIENT_SECRET == null)
                 throw new RuntimeException("Have you initialized by calling SMR.initialize(Context context, String clientId, String clientSecret) method?");
@@ -59,7 +66,7 @@ public class SMR {
                 return;
             }
         }
-        User user = new User(name, email);
+        User user = new User(name, username, email);
         Pref.saveUser(context, user);
         ApiClient.registerUser(context, user);
     }
@@ -82,19 +89,15 @@ public class SMR {
 
         if (LOCKED || isOptedOut(context)) return;
         LOCKED = true;
-        StorageUtil.writeObject(context, StorageUtil.TEMP_FILE_NAME, event);
+        Ael.logEvent(context,event);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                List<Event> eventList;
-                if (hasStoragePermission(context))
-                    eventList = StorageUtil.readObjects(context, StorageUtil.TEMP_FILE_NAME);
-                else
-                    eventList = Collections.singletonList(event);
+                List<Event> eventList=Ael.getEvents(context);
                 ApiClient.postEvent(context, eventList);
                 LOCKED = false;
             }
-        }, 10000);
+        }, 5000);
     }
 
     private static boolean isOptedOut(Context context) {

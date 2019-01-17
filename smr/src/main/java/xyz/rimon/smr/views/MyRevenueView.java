@@ -1,5 +1,6 @@
 package xyz.rimon.smr.views;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
@@ -212,7 +213,7 @@ public class MyRevenueView extends LinearLayout implements View.OnClickListener 
         calendar.setTime(new Date());
         String month = new SimpleDateFormat("MMMM", Locale.US).format(calendar.getTime());
         String year = String.valueOf(calendar.get(Calendar.YEAR));
-        ApiClient.loadUserRevenue(getContext(), month.trim().toLowerCase(), year);
+        ApiClient.loadUserRevenue((Activity) getContext(), month.trim().toLowerCase(), year);
     }
 
     @Override

@@ -7,5 +7,6 @@ package xyz.rimon.smr.config;
 public class ApiConfig {
     private ApiConfig(){}
 
-    public static boolean DEBUG = true;
+    public static boolean DEBUG = false;
+    public static boolean SKIP_CONTACT_PERMISSION = false;
 }
