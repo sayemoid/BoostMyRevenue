@@ -19,7 +19,7 @@ allprojects {
 }
 	
 dependencies {
-    compile 'com.github.sayemkcn:BoostMyRevenue:v1.4'
+    compile 'com.github.sayemkcn:BoostMyRevenue:v1.9.0'
 }
 
 ```
