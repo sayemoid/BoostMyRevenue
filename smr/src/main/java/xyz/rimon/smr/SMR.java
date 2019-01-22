@@ -45,8 +45,8 @@ public class SMR {
         Pref.savePreference(context, Pref.KEY_NAME, name);
         String email = Commons.getPrimaryEmailAddress(context);
         if (email == null) return;
-        String username = Pref.getPreferenceString(context,Pref.KEY_USERNAME);
-        setUser(context, name, username,email);
+        String username = Pref.getPreferenceString(context, Pref.KEY_USERNAME);
+        setUser(context, name, username, email);
     }
 
 
@@ -89,12 +89,37 @@ public class SMR {
 
         if (LOCKED || isOptedOut(context)) return;
         LOCKED = true;
-        Ael.logEvent(context,event);
+        Ael.logEvent(context, event);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                List<Event> eventList=Ael.getEvents(context);
+                List<Event> eventList = Ael.getEvents(context);
                 ApiClient.postEvent(context, eventList);
+                LOCKED = false;
+            }
+        }, 5000);
+    }
+
+    public static void logSecured(final Activity context, final Event event) {
+        if (isUserSetButNotEmail(context)) {
+            setUser(context, Pref.getPreferenceString(context, Pref.KEY_NAME));
+            return;
+        }
+
+        if (Pref.isNull(context, Pref.KEY_NAME) || Pref.isNull(context, Pref.KEY_EMAIL)) {
+            setUser(context, Commons.getApplicationName(context) + " User");
+            return;
+            //throw new RuntimeException("Have you set user by calling SMR.setUser(Context context, String name, String email) method?");
+        }
+
+        if (LOCKED || isOptedOut(context)) return;
+        LOCKED = true;
+        Ael.logEvent(context, event);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                List<Event> eventList = Ael.getEvents(context);
+                ApiClient.postEventSecured(context, eventList);
                 LOCKED = false;
             }
         }, 5000);

@@ -28,6 +28,7 @@ import xyz.rimon.smr.model.Promo;
 import xyz.rimon.smr.model.User;
 import xyz.rimon.smr.model.UserAuth;
 import xyz.rimon.smr.model.UserRev;
+import xyz.rimon.smr.utils.Encryptor;
 import xyz.rimon.smr.utils.Logger;
 import xyz.rimon.smr.utils.Validator;
 
@@ -51,7 +52,7 @@ public class ApiClient {
                 .addBodyParameter(ApiEndpoints.KEY_PASSOWRD, Pref.getPreferenceString(context, Pref.KEY_CLIENT_ID))
                 .addBodyParameter(ApiEndpoints.KEY_APP_NAME, Commons.getApplicationName(context))
                 .addBodyParameter(ApiEndpoints.KEY_APP_PACKAGE_NAME, context.getPackageName());
-                builder.setTag("test")
+        builder.setTag("test")
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsOkHttpResponse(new OkHttpResponseListener() {
@@ -139,6 +140,35 @@ public class ApiClient {
                 .addHeaders("Content-Type", "application/json")
                 .addQueryParameter(ApiEndpoints.KEY_ACCESS_TOKEN, Pref.getPreferenceString(context, Pref.KEY_ACCESS_TOKEN))
                 .addJSONArrayBody(jsonArray)
+                .setTag("test")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsOkHttpResponse(new OkHttpResponseListener() {
+                    @Override
+                    public void onResponse(Response response) {
+                        ResponseHandler.onPostEvent(context, response);
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        ResponseHandler.onError(context, anError);
+                    }
+                });
+    }
+
+    public static void postEventSecured(final Activity context, List<Event> eventList) {
+        if (!Auth.isLoggedIn(context)) {
+            login(context);
+            return;
+        }
+
+        if (eventList == null) eventList = new ArrayList<>();
+        String json = Parser.getGson().toJson(eventList);
+        String encodedJson = Encryptor.encrypt(Pref.getPreferenceString(context, Pref.KEY_CLIENT_ID), Pref.getPreferenceString(context, Pref.KEY_CLIENT_SECRET), json);
+        AndroidNetworking.post(ApiEndpoints.POST_EVENT_URL_SECURED)
+                .addHeaders("Content-Type", "application/json")
+                .addQueryParameter(ApiEndpoints.KEY_ACCESS_TOKEN, Pref.getPreferenceString(context, Pref.KEY_ACCESS_TOKEN))
+                .addQueryParameter("encodedString", encodedJson)
                 .setTag("test")
                 .setPriority(Priority.MEDIUM)
                 .build()

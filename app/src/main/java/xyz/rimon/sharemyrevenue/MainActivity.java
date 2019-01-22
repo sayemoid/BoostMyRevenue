@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 data.put("name","Sayem");
                 data.put("time", DateUtil.getServerDateTimeFormat().format(new Date()));
                 initEvent.setEventData(data);
-                SMR.logOnline(MainActivity.this, initEvent);
+                SMR.logSecured(MainActivity.this, initEvent);
             }
         });
     }
