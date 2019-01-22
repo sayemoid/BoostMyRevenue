@@ -6,6 +6,7 @@
 
 
 ***You can find a test implementation project [here](https://github.com/sayemkcn/bmr-test)*** <br/>
+***You can take a look at this utility gist for logging.You may want to modify and use it. [here](https://gist.github.com/sayemkcn/8adbb6e11baf0264618920d04899ccc8)*** <br/>
 ***For push notification tutorial [click here](https://github.com/sayemkcn/BoostMyRevenue/blob/master/firebasecm.md)***
 
 <b> Add BoostMyRevenue to your project</b>
@@ -19,7 +20,7 @@ allprojects {
 }
 	
 dependencies {
-    compile 'com.github.sayemkcn:BoostMyRevenue:v1.4'
+    compile 'com.github.sayemkcn:BoostMyRevenue:v1.9.0'
 }
 
 ```
